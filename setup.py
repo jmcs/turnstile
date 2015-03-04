@@ -3,10 +3,12 @@
 
 from setuptools import setup
 
+from git_hooks.version import version
+
 setup(
     name='Zalando Git Hooks',
     packages=['git_hooks'],
-    version='0.20150304.1',
+    version=version,
     description='Zalando Local Git Hooks',
     author='João Santos',
     author_email='joao.santos@zalando.de',
