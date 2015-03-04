@@ -3,5 +3,16 @@
 
 from __future__ import print_function
 
-if __name__ == '__main__':
+from click import command
+
+
+@command()
+def pre_commit():
+    """
+    Pre commit hook
+    """
+
     print('pre-commit hook')
+
+if __name__ == '__main__':
+    pre_commit()
