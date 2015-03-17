@@ -47,10 +47,11 @@ def commit_msg(message_file_path):
     except IOError:
         logger.error('Commit message file (%s) not found', message_file_path)
         raise click.Abort
-    logger.debug('Commit Message:\n%s', commit_message)
+    logger.debug('Commit Message: %s', commit_message)
 
     commit_message = message.CommitMessage(commit_message)
     logger.debug('Specification: %s', commit_message.specification)
+    logger.debug('Is specification valid: %s', commit_message.specification.is_valid())
 
 if __name__ == '__main__':
     commit_msg()

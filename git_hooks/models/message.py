@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import git_hooks.models.specifications as specfications
+
 
 class CommitMessage(object):
     """
@@ -15,7 +17,7 @@ class CommitMessage(object):
         self.message = message
         # TODO specification objects
         specification_id, _ = message.split(' ', 1)
-        self.specification = specification_id
+        self.specification = specfications.Specification(specification_id)
 
     def __str__(self):
         return self.message
