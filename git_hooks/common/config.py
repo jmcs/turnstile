@@ -53,6 +53,17 @@ class UserConfiguration(object):
 
     @verbosity.setter
     def verbosity(self, value):
+        """
+        Store git hook verbosity in git config
+
+        >>> config=UserConfiguration()
+        >>> config.store = dict()  # Don't mess up with real config
+        >>> config.verbosity = 'DEBUG'
+        >>> config.verbosity
+        'DEBUG'
+
+        :param value: new verbosity
+        """
         if is_valid_log_verbosity(value):
             self.store['zalando.hooks.verbosity'] = value
         else:
