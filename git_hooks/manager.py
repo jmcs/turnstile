@@ -110,7 +110,6 @@ def cmd_config():
 
     # TODO move this to a question cli util
     current_verbosity = user_config.verbosity
-    print(current_verbosity)
     verbosity_levels = ['WARNING', 'INFO', 'DEBUG']
     print('Select the git hook verbosity:')
     for i, level in enumerate(verbosity_levels, start=1):
