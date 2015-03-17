@@ -8,6 +8,7 @@ import git
 
 import git_hooks.common.config as config
 import git_hooks.common.output as output
+import git_hooks.models.message as message
 
 
 @click.command()
@@ -47,6 +48,9 @@ def commit_msg(message_file_path):
         logger.error('Commit message file (%s) not found', message_file_path)
         raise click.Abort
     logger.debug('Commit Message:\n%s', commit_message)
+
+    commit_message = message.CommitMessage(commit_message)
+    logger.debug('Specification: %s', commit_message.specification)
 
 if __name__ == '__main__':
     commit_msg()
