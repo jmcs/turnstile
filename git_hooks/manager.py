@@ -4,8 +4,6 @@
 from __future__ import print_function, absolute_import
 
 from pathlib import Path
-import logging
-from __builtin__ import enumerate
 
 from click import Group, command
 import click
@@ -13,11 +11,8 @@ import git
 
 from .version import version
 from .common.config import UserConfiguration
+import git_hooks.common.output as output
 
-# TODO move this to module
-output = logging.getLogger('githooks')
-output.setLevel(logging.DEBUG)
-output.addHandler(logging.StreamHandler())
 # TODO move subcommands to specific modules
 
 
@@ -30,14 +25,16 @@ def install_hook(name, path, wrapper_command):
     :type wrapper_command: str
     """
 
-    output.debug('Installing %s hook.', name)
+    logger = output.get_logger('manager', 'DEBUG')
+
+    logger.debug('Installing %s hook.', name)
     if not path.exists() or click.confirm('{} hook already exists. Do you want to overwrite it?'.format(name)):
         with path.open('wb+') as pre_commit_hook:
             pre_commit_hook.write(wrapper_command)
         path.chmod(0o755)  # -rwxr-xr-x
-        output.info('Installed %s hook', name)
+        logger.info('Installed %s hook', name)
     else:
-        output.info('Skipped %s hook installation.', name)
+        logger.info('Skipped %s hook installation.', name)
 
 
 def remove_hook(name, path):
@@ -48,14 +45,16 @@ def remove_hook(name, path):
     :type path: Path
     """
 
-    output.debug('Removing %s hook.', name)
+    logger = output.get_logger('manager', 'DEBUG')
+
+    logger.debug('Removing %s hook.', name)
     if not path.exists():
-        output.debug('%s Hook doesn\'t exist.', name)
+        logger.debug('%s Hook doesn\'t exist.', name)
     elif click.confirm('Are you sure you want to remove {} hook?'.format(name)):
         path.unlink()
-        output.info('Removed %s hook', name)
+        logger.info('Removed %s hook', name)
     else:
-        output.info('Kept %s hook.', name)
+        logger.info('Kept %s hook.', name)
 
 
 @command('install')
@@ -64,12 +63,14 @@ def cmd_install():
     Install git hooks in repository
     """
 
-    output.info('Installing Git Hooks')
+    logger = output.get_logger('manager', 'DEBUG')
+
+    logger.info('Installing Git Hooks')
     try:
         repository = git.Repo()
     except git.InvalidGitRepositoryError:
         # TODO ERROR function
-        output.error('This command should be run inside a git repository')
+        logger.error('This command should be run inside a git repository')
         exit(-1)
 
     hook_dir = Path(repository.git_dir) / 'hooks'
@@ -85,12 +86,14 @@ def cmd_remove():
     Remove git hooks from repository
     """
 
-    output.info('Remove Git Hooks')
+    logger = output.get_logger('manager', 'DEBUG')
+
+    logger.info('Remove Git Hooks')
     try:
         repository = git.Repo()
     except git.InvalidGitRepositoryError:
         # TODO ERROR function
-        output.error('This command should be run inside a git repository')
+        logger.error('This command should be run inside a git repository')
         exit(-1)
 
     hook_dir = Path(repository.git_dir) / 'hooks'
@@ -105,6 +108,8 @@ def cmd_config():
     """
     Set configuration
     """
+
+    logger = output.get_logger('manager', 'DEBUG')
 
     user_config = UserConfiguration()
 
@@ -127,8 +132,8 @@ def cmd_version():
     """
     Print Git Hook version
     """
-
-    output.info('Zalando Local Git Hooks - %s', version)
+    logger = output.get_logger('manager', 'DEBUG')
+    logger.warning('Zalando Local Git Hooks - %s', version)
 
 manager = Group()
 manager.add_command(cmd_install)
