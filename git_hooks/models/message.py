@@ -15,9 +15,7 @@ class CommitMessage(object):
         :type message: str
         """
         self.message = message
-        # TODO specification objects
-        specification_id, _ = message.split(' ', 1)
-        self.specification = specfications.Specification(specification_id)
+        self.specification = specfications.get_specification(message)
 
     def __str__(self):
         return self.message
