@@ -37,6 +37,23 @@ def is_valid_log_verbosity(verbosity):
 class UserConfiguration(object):
     """
     User specific options
+
+
+    >>> config=UserConfiguration()
+    >>> config.store = dict()  # Don't mess up with real config
+    >>> config.verbosity = 'DEBUG'
+    >>> config.verbosity
+    'DEBUG'
+    >>> config.verbosity = 'INFO'
+    >>> config.verbosity
+    'INFO'
+    >>> config.verbosity = 'OTHER'
+    Traceback (most recent call last):
+        ...
+    ValueError: "OTHER" is not a valid verbosity
+    >>> config.store['zalando.hooks.verbosity'] = 'BREAKSTUFF'
+    >>> config.verbosity
+    'INFO'
     """
 
     def __init__(self, level='global'):
@@ -44,11 +61,16 @@ class UserConfiguration(object):
 
     @property
     def verbosity(self):
-        # Try to get logging level from git config otherwise fallback to info
-        verbosity = self.store.get('zalando.hooks.verbosity', logging.INFO)
+        """
+        Tries to get logging level from git config, falling back to INFO if it is not set or is an invalid value
+
+        :return: Log Level
+        :rtype: str
+        """
+        verbosity = self.store.get('zalando.hooks.verbosity', 'INFO')
         if not is_valid_log_verbosity(verbosity):
             logger.warning('Invalid Verbosity "%s" falling back to INFO', verbosity)
-            verbosity = logging.INFO
+            verbosity = 'INFO'
         return verbosity
 
     @verbosity.setter
@@ -56,15 +78,10 @@ class UserConfiguration(object):
         """
         Store git hook verbosity in git config
 
-        >>> config=UserConfiguration()
-        >>> config.store = dict()  # Don't mess up with real config
-        >>> config.verbosity = 'DEBUG'
-        >>> config.verbosity
-        'DEBUG'
-
+        :type value: str | int
         :param value: new verbosity
         """
         if is_valid_log_verbosity(value):
             self.store['zalando.hooks.verbosity'] = value
         else:
-            raise ValueError('"%s" is not a valid verbosity', value)
+            raise ValueError('"{}" is not a valid verbosity'.format(value))
