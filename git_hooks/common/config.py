@@ -4,8 +4,10 @@
 from __future__ import print_function, absolute_import
 
 import logging
+import pathlib
 
 import gitconfig
+import yaml
 
 logger = logging.getLogger('githooks.config')
 
@@ -32,6 +34,27 @@ def is_valid_log_verbosity(verbosity):
         return True
     except (ValueError, TypeError):
         return False
+
+
+def load_repository_configuration(repository_path):
+    """
+    Load repository specific configurations adding CONFIG_FILE as a parameter with the load file.
+    If hooks.config doesn't exist it returns only  {'CONFIG_FILE': 'DEFAULT'}
+
+    :rtype: dict
+    """
+    repository_path = pathlib.Path(repository_path)
+    config_path = repository_path / 'hooks.config'
+    try:
+        with config_path.open() as config_file:
+            # If the configuration file is empty safe_load returns None and we want a dict
+            config = yaml.safe_load(config_file) or {}
+            config['CONFIG_FILE'] = config_path
+    except IOError:
+        config = {'CONFIG_FILE': 'DEFAULT'}
+    except TypeError:
+        raise ValueError('Invalid Repository Configuration')
+    return config
 
 
 class UserConfiguration(object):

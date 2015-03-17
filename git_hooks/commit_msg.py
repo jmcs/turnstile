@@ -4,6 +4,7 @@
 from __future__ import print_function, absolute_import
 
 import click
+import git
 
 import git_hooks.common.config as config
 import git_hooks.common.output as output
@@ -21,16 +22,28 @@ def commit_msg(message_file_path):
     :type message_file_path: string
     """
 
+    repository = git.Repo()
+
     user_configuration = config.UserConfiguration()
     logger = output.get_logger('commit-msg', user_configuration.verbosity)
+
     logger.debug('Starting Commit-Msg Hook')
     logger.debug('Path to commit message file: %s', message_file_path)
+
+    logger.debug('Repository Working Dir: %s', repository.working_dir)
+
+    try:
+        repository_configuration = config.load_repository_configuration(repository.working_dir)
+    except ValueError:
+        logger.error('Invalid Repository Configuration')
+        raise click.Abort
+    logger.debug('Loaded repository configuration: %s', repository_configuration['CONFIG_FILE'])
 
     logger.debug('Opening commit message file')
     try:
         with open(message_file_path) as message_file:
             commit_message = message_file.read()
-    except FileNotFoundError:
+    except IOError:
         logger.error('Commit message file (%s) not found', message_file_path)
         raise click.Abort
     logger.debug('Commit Message:\n%s', commit_message)
