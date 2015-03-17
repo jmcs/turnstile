@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 from git_hooks.version import version
 
 setup(
     name='Zalando Git Hooks',
-    packages=['git_hooks'],
+    packages=find_packages(),
     version=version,
     description='Zalando Local Git Hooks',
     author='João Santos',
