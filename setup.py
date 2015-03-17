@@ -25,7 +25,6 @@ setup(
     ],
     long_description='Zalando Local Git Hooks',
     entry_points={'console_scripts': ['git-hooks = git_hooks.manager:manager',
-                  'zalando-local-git-hooks-commit-msg = git_hooks.commit_msg:commit_msg',
-                  'zalando-local-git-hooks-pre-commit = git_hooks.pre_commit:pre_commit']},
+                                      'zalando-local-git-hooks-commit-msg = git_hooks.commit_msg:commit_msg',
+                                      'zalando-local-git-hooks-pre-commit = git_hooks.pre_commit:pre_commit']},
 )
-
