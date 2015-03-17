@@ -53,6 +53,7 @@ class UserConfiguration(object):
 
     @verbosity.setter
     def verbosity(self, value):
-        print(value)
         if is_valid_log_verbosity(value):
             self.store['zalando.hooks.verbosity'] = value
+        else:
+            raise ValueError('"%s" is not a valid verbosity', value)
