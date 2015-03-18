@@ -53,21 +53,22 @@ def commit_msg(message_file_path):
 
     commit_message = message.CommitMessage(commit_message)
     logger.debug('Specification: %s', commit_message.specification)
-    logger.debug('Is specification valid: %s', commit_message.specification.is_valid())
 
     # todo get checks from config
-    check = checks.load_check('commit-msg', 'message_dummy')
-    result = check(commit_message)
+    checklist = repository_configuration.get('checks')
+    checks_to_run = checks.get_checks('commit-msg', checklist)
+    for check in checks_to_run:
+        result = check(commit_message)
 
-    # TODO move to function
-    if result.successful:
-        logger.info('✔ %s', check.description)
-        for detail in result.details:
-            logger.debug('  %s', detail)
-    else:
-        logger.error('✘ %s', check.description)
-        for detail in result.details:
-            logger.error('  %s', detail)
+        # TODO move to function
+        if result.successful:
+            logger.info('✔ %s', check.description)
+            for detail in result.details:
+                logger.info('  %s', detail)
+        else:
+            logger.error('✘ %s', check.description)
+            for detail in result.details:
+                logger.error('  %s', detail)
 
 if __name__ == '__main__':
     commit_msg()
