@@ -5,6 +5,10 @@ import collections
 import importlib
 
 import git_hooks.common.output as output
+# we need to import the following modules so import will work on python3
+import git_hooks.checks.commit_msg  # noqa
+import git_hooks.checks.pre_commit  #noqa
+
 
 CheckResult = collections.namedtuple('CheckResult', ['successful', 'details'])
 
