@@ -34,6 +34,5 @@ def pre_commit():
         raise click.Abort
     logger.debug('Loaded repository configuration: %s', repository_configuration['CONFIG_FILE'])
 
-
 if __name__ == '__main__':
     pre_commit()
