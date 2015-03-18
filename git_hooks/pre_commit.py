@@ -8,7 +8,7 @@ import git
 
 import git_hooks.common.config as config
 import git_hooks.common.output as output
-
+import git_hooks.models.staging as staging
 
 @click.command()
 def pre_commit():
@@ -33,6 +33,9 @@ def pre_commit():
         logger.error('Invalid Repository Configuration')
         raise click.Abort
     logger.debug('Loaded repository configuration: %s', repository_configuration['CONFIG_FILE'])
+
+    staging_area = staging.StagingArea(repository)
+    logger.debug('Changed Files: %d', len(staging_area.changes))
 
 if __name__ == '__main__':
     pre_commit()
