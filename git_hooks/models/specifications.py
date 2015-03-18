@@ -8,6 +8,8 @@ import re
 class BaseSpecification(object):
     _metaclass__ = abc.ABCMeta
 
+    type = 'Generic Specification'
+
     @property
     @abc.abstractmethod
     def id(self):
@@ -75,6 +77,8 @@ class JIRASpecification(Specification):
     False
     """
     TICKET_PATTERN = re.compile('#?(?P<id>[A-Z]+-[0-9]+)')
+
+    type = 'Jira'
 
     def is_valid(self):
         matches = self.TICKET_PATTERN.match(self._id)
