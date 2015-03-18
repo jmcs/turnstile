@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import collections
 import importlib
 
@@ -83,3 +86,34 @@ def get_checks(hook_name, checklist):
         if check:
             checks_for_hook.append(check)
     return checks_for_hook
+
+
+def run_checks(hook_name, checklist, check_object):
+    """
+    Runs checks for hooks
+
+    :param hook_name: Which hook is running the checks
+    :type hook_name: str
+    :param checklist: List of check names
+    :type checklist: [str]
+    :param check_object: Object to check, either a CommitMessage or a StagingArea
+    :return: Number of failed checks
+    :rtype: int
+    """
+    logger = output.get_sub_logger(hook_name, 'run_checks')
+    failed_checks = 0
+    checks_to_run = get_checks('commit-msg', checklist)
+    for check in checks_to_run:
+        result = check(check_object)
+
+        # TODO move to function
+        if result.successful:
+            logger.info('✔ %s', check.description)
+            for detail in result.details:
+                logger.info('  %s', detail)
+        else:
+            failed_checks += 1
+            logger.error('✘ %s', check.description)
+            for detail in result.details:
+                logger.error('  %s', detail)
+    return failed_checks

@@ -5,6 +5,7 @@ from __future__ import print_function, absolute_import
 
 import click
 import git
+import sys
 
 import git_hooks.checks as checks
 import git_hooks.common.config as config
@@ -54,21 +55,14 @@ def commit_msg(message_file_path):
     commit_message = message.CommitMessage(commit_message)
     logger.debug('Specification: %s', commit_message.specification)
 
-    # todo get checks from config
     checklist = repository_configuration.get('checks')
-    checks_to_run = checks.get_checks('commit-msg', checklist)
-    for check in checks_to_run:
-        result = check(commit_message)
+    failed_checks = checks.run_checks('commit-msg', checklist, commit_message)
 
-        # TODO move to function
-        if result.successful:
-            logger.info('✔ %s', check.description)
-            for detail in result.details:
-                logger.info('  %s', detail)
-        else:
-            logger.error('✘ %s', check.description)
-            for detail in result.details:
-                logger.error('  %s', detail)
+    if failed_checks:
+        s = '' if failed_checks == 1 else 's'
+        logger.error('%d check%s failed', failed_checks, s)
+
+    sys.exit(failed_checks)
 
 if __name__ == '__main__':
     commit_msg()
