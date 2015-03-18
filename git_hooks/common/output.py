@@ -4,8 +4,8 @@
 import logging
 
 
-def get_logger(command, verbosity='INFO'):
+def get_logger(command):
     output = logging.getLogger('githooks-'+command)
-    output.setLevel(verbosity)
     output.addHandler(logging.StreamHandler())
+    output.setLevel(logging.ERROR)
     return output

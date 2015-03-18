@@ -26,7 +26,8 @@ def commit_msg(message_file_path):
     repository = git.Repo()
 
     user_configuration = config.UserConfiguration()
-    logger = output.get_logger('commit-msg', user_configuration.verbosity)
+    logger = output.get_logger('commit-msg')
+    logger.setLevel(user_configuration.verbosity)
 
     logger.debug('Starting Commit-Msg Hook')
     logger.debug('Path to commit message file: %s', message_file_path)

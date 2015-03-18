@@ -10,7 +10,9 @@ def cmd():
     Set configuration
     """
 
-    logger = output.get_logger('manager.config', 'DEBUG')
+    logger = output.get_logger('manager.config')
+    # TODO: verbosity
+    logger.setLevel('DEBUG')
 
     user_config = config.UserConfiguration()
 

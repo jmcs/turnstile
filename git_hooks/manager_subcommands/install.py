@@ -6,8 +6,6 @@ import git
 
 import git_hooks.common.output as output
 
-logger = output.get_logger('manager.install', 'DEBUG')
-
 
 def install_hook(name, path, wrapper_command):
     """
@@ -17,7 +15,7 @@ def install_hook(name, path, wrapper_command):
     :type path: Path
     :type wrapper_command: str
     """
-
+    logger = output.get_logger('manager.install.install_hook')
     logger.debug('Installing %s hook.', name)
     if not path.exists() or click.confirm('{} hook already exists. Do you want to overwrite it?'.format(name)):
         with path.open('wb+') as pre_commit_hook:
@@ -35,6 +33,7 @@ def cmd():
     """
 
     # TODO verbose and quiet mode
+    logger = output.get_logger('manager.install')
     logger.setLevel('DEBUG')
 
     logger.info('Installing Git Hooks')

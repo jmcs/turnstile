@@ -22,9 +22,9 @@ def pre_commit():
 
     user_configuration = config.UserConfiguration()
 
-    logger = output.get_logger('pre-commit', user_configuration.verbosity)
+    logger = output.get_logger('pre-commit')
+    logger.setLevel(user_configuration.verbosity)
     logger.debug('Starting Pre-Commit Hook')
-
     logger.debug('Repository Working Dir: %s', repository.working_dir)
 
     try:
