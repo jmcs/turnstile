@@ -6,6 +6,7 @@ from __future__ import print_function, absolute_import
 import click
 import git
 
+import git_hooks.checks as checks
 import git_hooks.common.config as config
 import git_hooks.common.output as output
 import git_hooks.models.message as message
@@ -26,7 +27,7 @@ def commit_msg(message_file_path):
     repository = git.Repo()
 
     user_configuration = config.UserConfiguration()
-    logger = output.get_logger('commit-msg')
+    logger = output.get_root_logger('commit-msg')
     logger.setLevel(user_configuration.verbosity)
 
     logger.debug('Starting Commit-Msg Hook')
@@ -53,6 +54,20 @@ def commit_msg(message_file_path):
     commit_message = message.CommitMessage(commit_message)
     logger.debug('Specification: %s', commit_message.specification)
     logger.debug('Is specification valid: %s', commit_message.specification.is_valid())
+
+    # todo get checks from config
+    check = checks.load_check('commit-msg', 'message_dummy')
+    result = check(commit_message)
+
+    # TODO move to function
+    if result.successful:
+        logger.info('✔ %s', check.description)
+        for detail in result.details:
+            logger.debug('  %s', detail)
+    else:
+        logger.error('✘ %s', check.description)
+        for detail in result.details:
+            logger.error('  %s', detail)
 
 if __name__ == '__main__':
     commit_msg()

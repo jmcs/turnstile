@@ -10,6 +10,7 @@ import git_hooks.common.config as config
 import git_hooks.common.output as output
 import git_hooks.models.staging as staging
 
+
 @click.command()
 def pre_commit():
     """
@@ -22,7 +23,7 @@ def pre_commit():
 
     user_configuration = config.UserConfiguration()
 
-    logger = output.get_logger('pre-commit')
+    logger = output.get_root_logger('pre-commit')
     logger.setLevel(user_configuration.verbosity)
     logger.debug('Starting Pre-Commit Hook')
     logger.debug('Repository Working Dir: %s', repository.working_dir)

@@ -15,7 +15,7 @@ def remove_hook(name, path):
     :type path: Path
     """
 
-    logger = output.get_logger('manager.remove.remove_hook')
+    logger = output.get_sub_logger('manager-remove', 'remove_hook')
     logger.debug('Removing %s hook.', name)
     if not path.exists():
         logger.debug('%s Hook doesn\'t exist.', name)
@@ -33,7 +33,7 @@ def cmd():
     """
 
     # TODO verbose and quiet mode
-    logger = output.get_logger('manager.remove')
+    logger = output.get_root_logger('manager-remove')
     logger.setLevel('DEBUG')
 
     logger.info('Remove Git Hooks')

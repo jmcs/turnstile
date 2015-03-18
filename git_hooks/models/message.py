@@ -14,7 +14,7 @@ class CommitMessage(object):
         :param message: Commit message
         :type message: str
         """
-        self.message = message
+        self.message = message.strip()
         self.specification = specfications.get_specification(message)
 
     def __str__(self):
