@@ -8,6 +8,7 @@ def cmd():
     """
     Set configuration
     """
+    # TODO implement local and global
 
     user_config = config.UserConfiguration()
 

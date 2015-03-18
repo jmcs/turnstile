@@ -8,7 +8,8 @@ import re
 class BaseSpecification(object):
     _metaclass__ = abc.ABCMeta
 
-    type = 'Generic Specification'
+    format = 'Generic Specification'
+    format = 'Generic Specification'
 
     @property
     @abc.abstractmethod
@@ -78,16 +79,16 @@ class JIRASpecification(Specification):
     """
     TICKET_PATTERN = re.compile('#?(?P<id>[A-Z]+-[0-9]+)')
 
-    type = 'Jira'
+    format = 'Jira'
 
     def is_valid(self):
         matches = self.TICKET_PATTERN.match(self._id)
         return bool(matches)
 
 
-def get_specification(commit_message, specification_type=None):
+def get_specification(commit_message, specification_format=None):
     """
-    Gets the right specification instance for specification_type and commit_message
+    Gets the right specification instance for specification_format and commit_message
 
     >>> s1 = get_specification('something', None)
     >>> type(s1) == Specification
@@ -113,13 +114,13 @@ def get_specification(commit_message, specification_type=None):
         specification_id = commit_message
 
     try:
-        specification_class = _type_class_map[specification_type]
+        specification_class = _format_class_map[specification_format]
     except KeyError:
         raise ValueError('Invalid Specification Type')
     return specification_class(specification_id)
 
 
-_type_class_map = {
+_format_class_map = {
     None: Specification,  # by default it's a boring Specification without validation
     'jira': JIRASpecification,
 }

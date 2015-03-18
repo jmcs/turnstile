@@ -54,8 +54,8 @@ def commit_msg(message_file_path):
     logger.debug('Commit Message: %s', commit_message)
 
     specification_options = repository_configuration.get('specification', {})
-    specification_type = specification_options.get('type')
-    commit_message = message.CommitMessage(commit_message,specification_type)
+    specification_format = specification_options.get('format')
+    commit_message = message.CommitMessage(commit_message, specification_format)
     logger.debug('Specification: %s', commit_message.specification)
 
     failed_checks = checks.run_checks('commit-msg', user_configuration, repository_configuration, commit_message)

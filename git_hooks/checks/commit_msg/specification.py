@@ -26,11 +26,11 @@ def check(user_configuration, repository_configuration, commit_message):
 
     logger = output.get_sub_logger('commit-msg', 'specification')
     logger.debug('Commit Message: %s', commit_message.message)
-    logger.debug('Specification type: %s', specification.type)
+    logger.debug('Specification format: %s', specification.format)
     logger.debug("Specification is valid: %s", is_valid)
 
     result.successful = is_valid
     if not is_valid:
-        result.add_detail('{spec} is not a valid {spec.type} specification id.'.format(spec=specification))
+        result.add_detail('{spec} is not a valid {spec.format} specification id.'.format(spec=specification))
 
     return result
