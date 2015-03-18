@@ -3,9 +3,10 @@
 
 from __future__ import print_function, absolute_import
 
+import sys
+
 import click
 import git
-import sys
 
 import git_hooks.checks as checks
 import git_hooks.common.config as config

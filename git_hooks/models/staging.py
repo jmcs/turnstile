@@ -26,7 +26,7 @@ class StagingArea(object):
         self.temporary_directory = None
         self.files = []  # this will be populated with the temporary files
 
-        diff = repository.index.diff('HEAD')
+        diff = repository.head.commit.diff()
         added_changes = diff.iter_change_type('A')
         modified_changes = diff.iter_change_type('M')
         self.changes = list(itertools.chain(added_changes, modified_changes))

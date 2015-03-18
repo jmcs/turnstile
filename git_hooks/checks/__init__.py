@@ -102,7 +102,7 @@ def run_checks(hook_name, checklist, check_object):
     """
     logger = output.get_sub_logger(hook_name, 'run_checks')
     failed_checks = 0
-    checks_to_run = get_checks('commit-msg', checklist)
+    checks_to_run = get_checks(hook_name, checklist)
     for check in checks_to_run:
         result = check(check_object)
 

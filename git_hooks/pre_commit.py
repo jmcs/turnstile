@@ -3,9 +3,12 @@
 
 from __future__ import print_function, absolute_import
 
+import sys
+
 import click
 import git
 
+import git_hooks.checks as checks
 import git_hooks.common.config as config
 import git_hooks.common.output as output
 import git_hooks.models.staging as staging
@@ -37,6 +40,15 @@ def pre_commit():
 
     staging_area = staging.StagingArea(repository)
     logger.debug('Changed Files: %d', len(staging_area.changes))
+
+    checklist = repository_configuration.get('checks')
+    failed_checks = checks.run_checks('pre-commit', checklist, staging_area)
+
+    if failed_checks:
+        s = '' if failed_checks == 1 else 's'
+        logger.error('%d check%s failed', failed_checks, s)
+
+    sys.exit(failed_checks)
 
 if __name__ == '__main__':
     pre_commit()
