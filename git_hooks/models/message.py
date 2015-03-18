@@ -9,12 +9,15 @@ class CommitMessage(object):
     Git commit message
     """
 
-    def __init__(self, message, specification_format):
+    def __init__(self, branch, message, specification_format):
         """
+        :param branch: Active branch
+        :type branch: str
         :param message: Commit message
         :type message: str
         :type specification_format: str
         """
+        self.branch = branch
         self.message = message.strip()
         self.specification = specfications.get_specification(message, specification_format)
 

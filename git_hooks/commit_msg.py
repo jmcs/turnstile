@@ -27,6 +27,7 @@ def commit_msg(message_file_path):
     """
 
     repository = git.Repo()
+    branch = repository.active_branch.name
 
     user_configuration = config.UserConfiguration()
     logger = output.get_root_logger('commit-msg')
@@ -36,6 +37,7 @@ def commit_msg(message_file_path):
     logger.debug('Path to commit message file: %s', message_file_path)
 
     logger.debug('Repository Working Dir: %s', repository.working_dir)
+    logger.debug('Current branch: %s', branch)
 
     try:
         repository_configuration = config.load_repository_configuration(repository.working_dir)
@@ -47,15 +49,15 @@ def commit_msg(message_file_path):
     logger.debug('Opening commit message file')
     try:
         with open(message_file_path) as message_file:
-            commit_message = message_file.read()
+            str_commit_message = message_file.read()
     except IOError:
         logger.error('Commit message file (%s) not found', message_file_path)
         raise click.Abort
-    logger.debug('Commit Message: %s', commit_message)
+    logger.debug('Commit Message: %s', str_commit_message)
 
     specification_options = repository_configuration.get('specification', {})
     specification_format = specification_options.get('format')
-    commit_message = message.CommitMessage(commit_message, specification_format)
+    commit_message = message.CommitMessage(branch, str_commit_message, specification_format)
     logger.debug('Specification: %s', commit_message.specification)
 
     failed_checks = checks.run_checks('commit-msg', user_configuration, repository_configuration, commit_message)
