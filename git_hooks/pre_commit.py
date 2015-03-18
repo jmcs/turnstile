@@ -41,8 +41,7 @@ def pre_commit():
     staging_area = staging.StagingArea(repository)
     logger.debug('Changed Files: %d', len(staging_area.changes))
 
-    checklist = repository_configuration.get('checks')
-    failed_checks = checks.run_checks('pre-commit', checklist, staging_area)
+    failed_checks = checks.run_checks('pre-commit', user_configuration, repository_configuration, staging_area)
 
     if failed_checks:
         s = '' if failed_checks == 1 else 's'

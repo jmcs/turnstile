@@ -56,8 +56,7 @@ def commit_msg(message_file_path):
     commit_message = message.CommitMessage(commit_message)
     logger.debug('Specification: %s', commit_message.specification)
 
-    checklist = repository_configuration.get('checks')
-    failed_checks = checks.run_checks('commit-msg', checklist, commit_message)
+    failed_checks = checks.run_checks('commit-msg', user_configuration, repository_configuration, commit_message)
 
     if failed_checks:
         s = '' if failed_checks == 1 else 's'

@@ -6,9 +6,14 @@ import git_hooks.common.output as output
 
 
 @checks.Check('Dummy Pre-Commit Check')
-def check(staging_area):
+def check(user_configuration, repository_configuration, staging_area):
     """
+    Dummy Check
 
+    :param user_configuration: User specific configuration
+    :type user_configuration: git_hooks.common.config.UserConfiguration
+    :param repository_configuration: Repository specific configuration
+    :type repository_configuration: dict
     :param commit_message:
     :type commit_message: git_hooks.models.staging.StagingArea
     :return: If check passed or not

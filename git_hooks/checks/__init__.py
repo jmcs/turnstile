@@ -92,25 +92,28 @@ def get_checks(hook_name, checklist):
     return checks_for_hook
 
 
-def run_checks(hook_name, checklist, check_object):
+def run_checks(hook_name, user_configuration, repository_configuration, check_object, ):
     """
     Runs checks for hooks
 
     :param hook_name: Which hook is running the checks
     :type hook_name: str
-    :param checklist: List of check names
-    :type checklist: [str]
+    :param user_configuration: User specific configuration
+    :type user_configuration: git_hooks.common.config.UserConfiguration
+    :param repository_configuration: Repository specific configuration
+    :type repository_configuration: dict
     :param check_object: Object to check, either a CommitMessage or a StagingArea
     :return: Number of failed checks
     :rtype: int
     """
+
     logger = output.get_sub_logger(hook_name, 'run_checks')
     failed_checks = 0
+    checklist = repository_configuration.get('checks', [])
     checks_to_run = get_checks(hook_name, checklist)
     for check in checks_to_run:
-        result = check(check_object)
+        result = check(user_configuration, repository_configuration, check_object)
 
-        # TODO move to function
         if result.successful:
             logger.info('✔ %s', check.description)
             for detail in result.details:
