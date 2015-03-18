@@ -1,7 +1,6 @@
 import click
 
 import git_hooks.common.config as config
-import git_hooks.common.output as output
 
 
 @click.command('config')
@@ -9,10 +8,6 @@ def cmd():
     """
     Set configuration
     """
-
-    logger = output.get_root_logger('manager-config')
-    # TODO: verbosity
-    logger.setLevel('DEBUG')
 
     user_config = config.UserConfiguration()
 

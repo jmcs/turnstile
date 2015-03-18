@@ -27,14 +27,16 @@ def install_hook(name, path, wrapper_command):
 
 
 @click.command('install')
-def cmd():
+@click.option('-v', 'verbosity', flag_value='DEBUG', help='Use Verbose Mode')
+@click.option('-n', 'verbosity', flag_value='INFO', default=True, help='Use Normal Verbosity (default)')
+@click.option('-q', 'verbosity', flag_value='WARNING', help='Use Quiet Mode')
+def cmd(verbosity):
     """
     Install git hooks in repository
     """
 
-    # TODO verbose and quiet mode
     logger = output.get_root_logger('manager-install')
-    logger.setLevel('DEBUG')
+    logger.setLevel(verbosity)
 
     logger.info('Installing Git Hooks')
     try:

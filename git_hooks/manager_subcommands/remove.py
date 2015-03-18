@@ -27,14 +27,16 @@ def remove_hook(name, path):
 
 
 @click.command('remove')
-def cmd():
+@click.option('-v', 'verbosity', flag_value='DEBUG', help='Use Verbose Mode')
+@click.option('-n', 'verbosity', flag_value='INFO', default=True, help='Use Normal Verbosity (default)')
+@click.option('-q', 'verbosity', flag_value='WARNING', help='Use Quiet Mode')
+def cmd(verbosity):
     """
     Remove git hooks from repository
     """
 
-    # TODO verbose and quiet mode
     logger = output.get_root_logger('manager-remove')
-    logger.setLevel('DEBUG')
+    logger.setLevel(verbosity)
 
     logger.info('Remove Git Hooks')
     try:
