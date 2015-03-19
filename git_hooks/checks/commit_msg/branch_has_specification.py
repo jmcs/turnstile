@@ -31,9 +31,12 @@ def check(user_configuration, repository_configuration, commit_message):
     matches_exception = commit_message.branch == 'master'
     has_specification = specification in commit_message.branch
 
-    is_valid_branch_name = has_specification or matches_exception
-    result.successful = is_valid_branch_name
-    if not is_valid_branch_name:
+    if matches_exception:
+        logger.debug("'%s' doesn't need to include specification.", commit_message.branch)
+        raise checks.CheckIgnore
+
+    result.successful = has_specification
+    if not has_specification:
         template = "{branch} doesn't include a reference to the specification {spec}."
         result.add_detail(template.format(branch=commit_message.branch, spec=specification))
 

@@ -13,6 +13,13 @@ import git_hooks.checks.pre_commit  # noqa
 CheckResult = collections.namedtuple('CheckResult', ['successful', 'details'])
 
 
+class CheckIgnore(Exception):
+    """
+    Exception to tell an check should be ignored in a specific case.
+    """
+    pass
+
+
 class CheckResult(object):
     def __init__(self, successful=True, details=None):
         """
@@ -112,7 +119,11 @@ def run_checks(hook_name, user_configuration, repository_configuration, check_ob
     checklist = repository_configuration.get('checks', [])
     checks_to_run = get_checks(hook_name, checklist)
     for check in checks_to_run:
-        result = check(user_configuration, repository_configuration, check_object)
+        try:
+            result = check(user_configuration, repository_configuration, check_object)
+        except CheckIgnore:
+            logger.debug('Check was ignored')
+            continue
 
         if result.successful:
             logger.info('✔ %s', check.description)
