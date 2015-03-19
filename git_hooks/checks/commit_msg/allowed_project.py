@@ -39,7 +39,7 @@ def check(user_configuration, repository_configuration, commit_message):
     >>> result.successful
     False
     >>> result.details
-    ["SHOP isn't allowed on this repository. Please use one of: CD,PF."]
+    ["SHOP isn't allowed on this repository. Please use one of: CD, PF."]
 
     >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', None)
     >>> result = check(None, allow_cd_pf, commit)
@@ -102,6 +102,6 @@ def check(user_configuration, repository_configuration, commit_message):
             template = "{project} isn't allowed on this repository. Please use {allowed}."
         else:
             template = "{project} isn't allowed on this repository. Please use one of: {allowed}."
-        result.add_detail(template.format(project=project, allowed=','.join(allowed_projects)))
+        result.add_detail(template.format(project=project, allowed=', '.join(allowed_projects)))
 
     return result
