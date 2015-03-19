@@ -3,6 +3,7 @@
 
 import git_hooks.checks as checks
 import git_hooks.common.output as output
+import re
 
 
 @checks.Check('Branch has specification')
@@ -27,13 +28,17 @@ def check(user_configuration, repository_configuration, commit_message):
     logger.debug('Specification: %s', specification)
     logger.debug('Branch: %s', commit_message.branch)
 
-    # TODO exceptions
-    matches_exception = commit_message.branch == 'master'
-    has_specification = specification in commit_message.branch
+    check_options = repository_configuration.get('branch-has-specification', {})
+    exceptions = check_options.get('exceptions', [])
+    exceptions.append('master')  # master is always ignored
 
-    if matches_exception:
-        logger.debug("'%s' doesn't need to include specification.", commit_message.branch)
-        raise checks.CheckIgnore
+    for exception in exceptions:
+        logger.debug("Checking if branch matches '%s'", exception)
+        if re.match(exception, commit_message.branch):
+            logger.debug("'%s' doesn't need to include specification.", commit_message.branch)
+            raise checks.CheckIgnore
+
+    has_specification = specification in commit_message.branch
 
     result.successful = has_specification
     if not has_specification:
