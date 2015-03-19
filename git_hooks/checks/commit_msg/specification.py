@@ -10,6 +10,22 @@ def check(user_configuration, repository_configuration, commit_message):
     """
     Check if the specification is valid.
 
+    >>> import git_hooks.models.message as message
+    >>> commit1 = message.CommitMessage('something', 'CD-1', 'jira')
+    >>> result1 = check(None, None, commit1)
+    >>> result1.successful
+    True
+
+    >>> commit2 = message.CommitMessage('something', 'invalid-1', 'jira')
+    >>> result2 = check(None, None, commit2)
+    >>> result2.successful
+    False
+
+    >>> commit3 = message.CommitMessage('something', 'invalid-1', None)
+    >>> result3 = check(None, None, commit3)
+    >>> result3.successful
+    True
+
     :param user_configuration: User specific configuration
     :type user_configuration: git_hooks.common.config.UserConfiguration
     :param repository_configuration: Repository specific configuration
@@ -17,7 +33,7 @@ def check(user_configuration, repository_configuration, commit_message):
     :param commit_message:
     :type commit_message: git_hooks.models.message.CommitMessage
     :return: If check passed or not
-    :rtype: bool
+    :rtype: git_hooks.checks.CheckResult
     """
 
     logger = output.get_sub_logger('commit-msg', 'specification')
