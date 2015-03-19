@@ -41,8 +41,8 @@ def commit_msg(message_file_path):
 
     try:
         repository_configuration = config.load_repository_configuration(repository.working_dir)
-    except ValueError:
-        logger.error('Invalid Repository Configuration')
+    except ValueError as e:
+        logger.error(str(e))
         raise click.Abort
     logger.debug('Loaded repository configuration: %s', repository_configuration['CONFIG_FILE'])
 
