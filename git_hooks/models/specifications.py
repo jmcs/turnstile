@@ -68,20 +68,51 @@ class JIRASpecification(Specification):
     >>> spec = JIRASpecification('CD-1000')
     >>> str(spec)
     'CD-1000'
-    >>> spec.is_valid()
-    True
 
     >>> spec = JIRASpecification('1000')
     >>> str(spec)
     '1000'
-    >>> spec.is_valid()
-    False
     """
     TICKET_PATTERN = re.compile('#?(?P<id>[A-Z]+-[0-9]+)')
 
     format = 'Jira'
 
+    @property
+    def project(self):
+        """
+        >>> JIRASpecification('CD-1000').project
+        'CD'
+        >>> JIRASpecification('PF-20').project
+        'PF'
+        >>> JIRASpecification('IDontEvenKnowWhatThisIs').project
+        ''
+
+        :return: Ticket Project (e.g. CD-1000 -> CD)
+        :rtype: str
+        """
+        if self.is_valid():
+            project, ticket_number = self._id.split('-', 1)
+            return project
+        else:
+            return ''
+
     def is_valid(self):
+        """
+        >>> JIRASpecification('CD-1000').is_valid()
+        True
+        >>> JIRASpecification('PF-1000').is_valid()
+        True
+        >>> JIRASpecification('JIRA-1000').is_valid()
+        True
+        >>> JIRASpecification('PROJECT').is_valid()
+        False
+        >>> JIRASpecification('lower-1000').is_valid()
+        False
+        >>> JIRASpecification('1000').is_valid()
+        False
+        >>> JIRASpecification("dön't bréãk plèâs€").is_valid()
+        False
+        """
         matches = self.TICKET_PATTERN.match(self._id)
         return bool(matches)
 
