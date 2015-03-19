@@ -20,11 +20,12 @@ def check(user_configuration, repository_configuration, commit_message):
     :return: If check passed or not
     :rtype: bool
     """
+    logger = output.get_sub_logger('commit-msg', 'specification')
+
+    logger.debug('Starting branch-has-specification check...')
 
     result = checks.CheckResult()
     specification = str(commit_message.specification)
-
-    logger = output.get_sub_logger('commit-msg', 'specification')
     logger.debug('Specification: %s', specification)
     logger.debug('Branch: %s', commit_message.branch)
 

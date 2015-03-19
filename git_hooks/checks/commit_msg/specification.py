@@ -20,12 +20,14 @@ def check(user_configuration, repository_configuration, commit_message):
     :rtype: bool
     """
 
+    logger = output.get_sub_logger('commit-msg', 'specification')
+    logger.debug('Starting specification check...')
+    logger.debug('Commit Message: %s', commit_message.message)
+
     result = checks.CheckResult()
     specification = commit_message.specification
     is_valid = specification.is_valid()
 
-    logger = output.get_sub_logger('commit-msg', 'specification')
-    logger.debug('Commit Message: %s', commit_message.message)
     logger.debug('Specification format: %s', specification.format)
     logger.debug("Specification is valid: %s", is_valid)
 
