@@ -54,7 +54,7 @@ def check(user_configuration, repository_configuration, commit_message):
     :return: If check passed or not
     :rtype: git_hooks.checks.CheckResult
     """
-    logger = output.get_sub_logger('commit-msg', 'specification')
+    logger = output.get_sub_logger('commit-msg', 'branch-has-specification')
 
     logger.debug('Starting branch-has-specification check...')
 
