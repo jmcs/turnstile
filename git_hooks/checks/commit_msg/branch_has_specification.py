@@ -9,7 +9,41 @@ import re
 @checks.Check('Branch has specification')
 def check(user_configuration, repository_configuration, commit_message):
     """
-    Check if the specification is valid.
+    Check if the branch name includes the specification.
+
+    >>> import git_hooks.models.message as message
+    >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', 'jira')
+    >>> result = check(None, {}, commit)
+    >>> result.successful
+    True
+    >>> result.details
+    []
+
+    >>> commit = message.CommitMessage('CD-1', 'CD-1 méssage', None)
+    >>> result = check(None, {}, commit)
+    >>> result.successful
+    True
+    >>> result.details
+    []
+
+    >>> commit = message.CommitMessage('release/R10', 'CD-2 méssage', None)
+    >>> result = check(None, {}, commit)
+    >>> result.successful
+    False
+    >>> result.details
+    ["release/R10 doesn't include a reference to the specification CD-2."]
+
+    >>> commit = message.CommitMessage('release/R10', 'CD-2 méssage', None)
+    >>> result = check(None, {'branch-has-specification': {'exceptions': ['^release/']}}, commit)
+    Traceback (most recent call last):
+        ...
+    CheckIgnore
+
+    >>> commit = message.CommitMessage('master', 'CD-1 méssãg€', None)
+    >>> result = check(None, {}, commit)
+    Traceback (most recent call last):
+        ...
+    CheckIgnore
 
     :param user_configuration: User specific configuration
     :type user_configuration: git_hooks.common.config.UserConfiguration
@@ -18,7 +52,7 @@ def check(user_configuration, repository_configuration, commit_message):
     :param commit_message:
     :type commit_message: git_hooks.models.message.CommitMessage
     :return: If check passed or not
-    :rtype: bool
+    :rtype: git_hooks.checks.CheckResult
     """
     logger = output.get_sub_logger('commit-msg', 'specification')
 
