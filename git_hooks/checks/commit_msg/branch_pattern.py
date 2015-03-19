@@ -1,0 +1,99 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import git_hooks.checks as checks
+import git_hooks.common.output as output
+import re
+
+
+@checks.Check('Branch name is valid')
+def check(user_configuration, repository_configuration, commit_message):
+    """
+    Check if the branch name matches the allowed pattern. Master is always allowed
+
+    >>> import git_hooks.models.message as message
+    >>> commit = message.CommitMessage('master', 'CD-1 message', 'jira')
+    >>> result = check(None, {}, commit)
+    >>> result.successful
+    True
+    >>> result.details
+    []
+
+    >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', 'jira')
+    >>> result = check(None, {}, commit)
+    >>> result.successful
+    False
+    >>> result.details
+    ["feature/CD-1 doesn't match any allowed pattern."]
+
+    >>> allow_feature = {'branch-pattern': {'allowed': ['^feature/']}}
+    >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', 'jira')
+    >>> result = check(None, allow_feature, commit)
+    >>> result.successful
+    True
+    >>> result.details
+    []
+
+    >>> allow_feature = {'branch-pattern': {'allowed': ['^feature/']}}
+    >>> commit = message.CommitMessage('release/R10', 'CD-1 message', 'jira')
+    >>> result = check(None, allow_feature, commit)
+    >>> result.successful
+    False
+    >>> result.details
+    ["release/R10 doesn't match any allowed pattern."]
+
+    >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
+    >>> commit = message.CommitMessage('release/R10', 'CD-1 message', 'jira')
+    >>> result = check(None, allow_feature_release, commit)
+    >>> result.successful
+    True
+    >>> result.details
+    []
+
+    >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
+    >>> commit = message.CommitMessage('release/R10', 'CD-1 message', 'jira')
+    >>> result = check(None, allow_feature_release, commit)
+    >>> result.successful
+    True
+    >>> result.details
+    []
+
+    >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
+    >>> commit = message.CommitMessage('release/broken', 'CD-1 message', 'jira')
+    >>> result = check(None, allow_feature_release, commit)
+    >>> result.successful
+    False
+    >>> result.details
+    ["release/broken doesn't match any allowed pattern."]
+
+
+    :param user_configuration: User specific configuration
+    :type user_configuration: git_hooks.common.config.UserConfiguration
+    :param repository_configuration: Repository specific configuration
+    :type repository_configuration: dict
+    :param commit_message:
+    :type commit_message: git_hooks.models.message.CommitMessage
+    :return: If check passed or not
+    :rtype: git_hooks.checks.CheckResult
+    """
+    logger = output.get_sub_logger('commit-msg', 'branch-pattern')
+
+    logger.debug('Starting branch-pattern check...')
+
+    result = checks.CheckResult()
+    branch = commit_message.branch
+    logger.debug('Branch: %s', branch)
+
+    check_options = repository_configuration.get('branch-pattern', {})
+    allowed = check_options.get('allowed', [])
+    allowed.append('master')  # master is always allowed
+
+    logger.debug('Allowed Patterns: %s', allowed)
+
+    is_allowed = any(re.match(pattern, branch) for pattern in allowed)
+    result.successful = is_allowed
+    if not is_allowed:
+        template = "{branch} doesn't match any allowed pattern."
+        result.add_detail(template.format(branch=branch))
+
+    return result
