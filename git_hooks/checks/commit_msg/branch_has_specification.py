@@ -14,31 +14,22 @@ def check(user_configuration, repository_configuration, commit_message):
     >>> import git_hooks.models.message as message
     >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', 'jira')
     >>> result = check(None, {}, commit)
-    >>> result.successful
-    True
-    >>> result.details
-    []
-
-    >>> commit = message.CommitMessage('CD-1', 'CD-1 méssage', None)
-    >>> result = check(None, {}, commit)
-    >>> result.successful
-    True
-    >>> result.details
-    []
+    >>> result.successful, result.details
+    (True, [])
 
     >>> commit = message.CommitMessage('release/R10', 'CD-2 méssage', None)
     >>> result = check(None, {}, commit)
-    >>> result.successful
-    False
-    >>> result.details
-    ["release/R10 doesn't include a reference to the specification CD-2."]
+    >>> result.successful, result.details
+    (False, ["release/R10 doesn't include a reference to the specification CD-2."])
 
+    You can ignore some branches
     >>> commit = message.CommitMessage('release/R10', 'CD-2 méssage', None)
     >>> result = check(None, {'branch-has-specification': {'exceptions': ['^release/']}}, commit)
     Traceback (most recent call last):
         ...
     CheckIgnore
 
+    And master is always ignored
     >>> commit = message.CommitMessage('master', 'CD-1 méssãg€', None)
     >>> result = check(None, {}, commit)
     Traceback (most recent call last):
