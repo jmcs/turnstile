@@ -11,26 +11,23 @@ def check(user_configuration, repository_configuration, commit_message):
     Check if the specification is valid.
 
     >>> import git_hooks.models.message as message
+
+    Jira tickets are validated according to a specific regex
     >>> commit1 = message.CommitMessage('something', 'CD-1 m€sságe', 'jira')
     >>> result1 = check(None, None, commit1)
-    >>> result1.successful
-    True
-    >>> result1.details
-    []
+    >>> result1.successful, result1.details
+    (True, [])
 
     >>> commit2 = message.CommitMessage('something', 'invalid-1', 'jira')
     >>> result2 = check(None, None, commit2)
-    >>> result2.successful
-    False
-    >>> result2.details
-    ['invalid-1 is not a valid Jira specification id.']
+    >>> result2.successful, result2.details
+    (False, ['invalid-1 is not a valid Jira specification id.'])
 
+    Generic specifications are always valid
     >>> commit3 = message.CommitMessage('something', 'invalid-1', None)
     >>> result3 = check(None, None, commit3)
-    >>> result3.successful
-    True
-    >>> result3.details
-    []
+    >>> result3.successful, result3.details
+    (True, [])
 
     :param user_configuration: User specific configuration
     :type user_configuration: git_hooks.common.config.UserConfiguration
