@@ -84,6 +84,8 @@ class JIRASpecification(Specification):
         'CD'
         >>> JIRASpecification('PF-20').project
         'PF'
+        >>> JIRASpecification('#PF-20').project
+        'PF'
         >>> JIRASpecification('IDontEvenKnowWhatThisIs').project
         ''
 
@@ -92,7 +94,7 @@ class JIRASpecification(Specification):
         """
         if self.is_valid():
             project, ticket_number = self._id.split('-', 1)
-            return project
+            return project.lstrip('#')  # if spec id starts with # that is not part of the project
         else:
             return ''
 
