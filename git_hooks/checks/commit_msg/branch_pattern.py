@@ -11,6 +11,7 @@ def check(user_configuration, repository_configuration, commit_message):
     """
     Check if the branch name matches the allowed pattern. Master is always allowed
 
+    By default this check only allows master
     >>> import git_hooks.models.message as message
     >>> commit = message.CommitMessage('master', 'CD-1 message', 'jira')
     >>> result = check(None, {}, commit)
@@ -22,18 +23,7 @@ def check(user_configuration, repository_configuration, commit_message):
     >>> result.successful, result.details
     (False, ["feature/CD-1 doesn't match any allowed pattern."])
 
-    >>> allow_feature = {'branch-pattern': {'allowed': ['^feature/']}}
-    >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', 'jira')
-    >>> result = check(None, allow_feature, commit)
-    >>> result.successful, result.details
-    (True, [])
-
-    >>> allow_feature = {'branch-pattern': {'allowed': ['^feature/']}}
-    >>> commit = message.CommitMessage('release/R10', 'CD-1 message', 'jira')
-    >>> result = check(None, allow_feature, commit)
-    >>> result.successful, result.details
-    (False, ["release/R10 doesn't match any allowed pattern."])
-
+    But you can add more allowed patterns
     >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
     >>> commit = message.CommitMessage('release/R10', 'CD-1 message', 'jira')
     >>> result = check(None, allow_feature_release, commit)
