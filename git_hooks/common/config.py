@@ -10,6 +10,8 @@ import gitconfig
 import yaml
 import yaml.scanner
 
+import git_hooks.toolbox.collections as bus_collections
+
 logger = logging.getLogger('githooks.config')
 
 
@@ -60,7 +62,7 @@ def load_repository_configuration(repository_path):
         context = str(e.context_mark).strip()
         error = '{e.problem} {e.context} {context}'.format(e=e, context=context)
         raise ValueError('Invalid Repository Configuration - {}'.format(error))
-    return config
+    return bus_collections.MappingProxy(config)
 
 
 class UserConfiguration(object):
