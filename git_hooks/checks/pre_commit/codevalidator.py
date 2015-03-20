@@ -54,9 +54,15 @@ def check(user_configuration, repository_configuration, staging_area):
         logger.debug('No files to check.')
         raise checks.CheckIgnore
 
+    codevalidator_rc = staging_area.working_dir / 'codevalidatorrc'
+
     with staging_area:
         arguments = ['codevalidator', '-v']
         arguments.extend(str(path) for path in staging_area.files)
+
+        if codevalidator_rc.is_file:
+            arguments.extend(['-c', str(codevalidator_rc.resolve())])
+
         logger.debug('Command Arguments: %s', arguments)
 
         process = subprocess.Popen(arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -64,9 +70,9 @@ def check(user_configuration, repository_configuration, staging_area):
         logger.debug('Standard Output: %s', stdout)
         logger.debug('Standard Error: %s', stderr)
 
-        result.successful = not(stdout or stderr)
+        codevalidator_output = stdout+stderr
+        result.successful = not codevalidator_output
         if not result.successful:
-            result.details.append(remove_temporary_path(stdout, staging_area.temporary_directory))
-            result.details.append(stderr)
+            result.details.append(remove_temporary_path(codevalidator_output, staging_area.temporary_directory))
 
     return result

@@ -31,6 +31,8 @@ class StagingArea(object):
         modified_changes = diff.iter_change_type('M')
         self.changes = list(itertools.chain(added_changes, modified_changes))
 
+        self.working_dir = pathlib.Path(repository.working_dir)
+
     def __enter__(self):
         """
         Enter context manager and create a temporary directory
