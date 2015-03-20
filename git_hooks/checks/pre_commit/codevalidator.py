@@ -65,7 +65,8 @@ def check(user_configuration, repository_configuration, staging_area):
         logger.debug('Standard Error: %s', stderr)
 
         result.successful = not(stdout or stderr)
-        result.details.append(remove_temporary_path(stdout, staging_area.temporary_directory))
-        result.details.append(stderr)
+        if not result.successful:
+            result.details.append(remove_temporary_path(stdout, staging_area.temporary_directory))
+            result.details.append(stderr)
 
     return result
