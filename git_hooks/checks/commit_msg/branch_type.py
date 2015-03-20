@@ -11,44 +11,30 @@ def check(user_configuration, repository_configuration, commit_message):
     Check if the branch type is allowed. The branch type is the prefix of the branch name, for example feature/CD-100 is
     a feature branch.
 
+    By default only master is allowed
     >>> import git_hooks.models.message as message
     >>> commit = message.CommitMessage('master', 'CD-1 message', 'jira')
     >>> result = check(None, {}, commit)
-    >>> result.successful
-    True
-    >>> result.details
-    []
+    >>> result.successful, result.details
+    (True, [])
 
     >>> commit = message.CommitMessage('feature/ABC', 'CD-1 message', 'jira')
     >>> result = check(None, {}, commit)
-    >>> result.successful
-    False
-    >>> result.details
-    ["'feature' type is not allowed. Allowed types are: master."]
+    >>> result.successful, result.details
+    (False, ["'feature' type is not allowed. Allowed types are: master."])
 
+    But you can configure it
     >>> allow_feature_release = {'branch-type': {'allowed': ['feature', 'release']}}
     >>> commit = message.CommitMessage('feature/ABC', 'CD-1 message', 'jira')
     >>> result = check(None, allow_feature_release, commit)
-    >>> result.successful
-    True
-    >>> result.details
-    []
-
-    >>> allow_feature_release = {'branch-type': {'allowed': ['feature', 'release']}}
-    >>> commit = message.CommitMessage('release/ABC', 'CD-1 message', 'jira')
-    >>> result = check(None, allow_feature_release, commit)
-    >>> result.successful
-    True
-    >>> result.details
-    []
+    >>> result.successful, result.details
+    (True, [])
 
     >>> allow_feature_release = {'branch-type': {'allowed': ['feature', 'release']}}
     >>> commit = message.CommitMessage('other/ABC', 'CD-1 message', 'jira')
     >>> result = check(None, allow_feature_release, commit)
-    >>> result.successful
-    False
-    >>> result.details
-    ["'other' type is not allowed. Allowed types are: feature, release, master."]
+    >>> result.successful, result.details
+    (False, ["'other' type is not allowed. Allowed types are: feature, release, master."])
 
     :param user_configuration: User specific configuration
     :type user_configuration: git_hooks.common.config.UserConfiguration
