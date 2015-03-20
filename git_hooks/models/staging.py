@@ -39,6 +39,7 @@ class StagingArea(object):
         """
         self.temporary_directory = pathlib.Path(tempfile.mkdtemp())
         self.files = [self.create_temp_file(diff) for diff in self.changes]
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """
