@@ -14,58 +14,43 @@ def check(user_configuration, repository_configuration, commit_message):
     >>> import git_hooks.models.message as message
     >>> commit = message.CommitMessage('master', 'CD-1 message', 'jira')
     >>> result = check(None, {}, commit)
-    >>> result.successful
-    True
-    >>> result.details
-    []
+    >>> result.successful, result.details
+    (True, [])
 
     >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', 'jira')
     >>> result = check(None, {}, commit)
-    >>> result.successful
-    False
-    >>> result.details
-    ["feature/CD-1 doesn't match any allowed pattern."]
+    >>> result.successful, result.details
+    (False, ["feature/CD-1 doesn't match any allowed pattern."])
 
     >>> allow_feature = {'branch-pattern': {'allowed': ['^feature/']}}
     >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', 'jira')
     >>> result = check(None, allow_feature, commit)
-    >>> result.successful
-    True
-    >>> result.details
-    []
+    >>> result.successful, result.details
+    (True, [])
 
     >>> allow_feature = {'branch-pattern': {'allowed': ['^feature/']}}
     >>> commit = message.CommitMessage('release/R10', 'CD-1 message', 'jira')
     >>> result = check(None, allow_feature, commit)
-    >>> result.successful
-    False
-    >>> result.details
-    ["release/R10 doesn't match any allowed pattern."]
+    >>> result.successful, result.details
+    (False, ["release/R10 doesn't match any allowed pattern."])
 
     >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
     >>> commit = message.CommitMessage('release/R10', 'CD-1 message', 'jira')
     >>> result = check(None, allow_feature_release, commit)
-    >>> result.successful
-    True
-    >>> result.details
-    []
+    >>> result.successful, result.details
+    (True, [])
 
     >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
     >>> commit = message.CommitMessage('release/R10', 'CD-1 message', 'jira')
     >>> result = check(None, allow_feature_release, commit)
-    >>> result.successful
-    True
-    >>> result.details
-    []
+    >>> result.successful, result.details
+    (True, [])
 
     >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
     >>> commit = message.CommitMessage('release/broken', 'CD-1 message', 'jira')
     >>> result = check(None, allow_feature_release, commit)
-    >>> result.successful
-    False
-    >>> result.details
-    ["release/broken doesn't match any allowed pattern."]
-
+    >>> result.successful, result.details
+    (False, ["release/broken doesn't match any allowed pattern."])
 
     :param user_configuration: User specific configuration
     :type user_configuration: git_hooks.common.config.UserConfiguration
