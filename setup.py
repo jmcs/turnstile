@@ -13,7 +13,7 @@ setup(
     author='João Santos',
     author_email='joao.santos@zalando.de',
     url='https://stash.zalando.net/projects/PYMODULES/repos/zalando-githooks/browse',
-    install_requires=['click', 'GitPython', 'pathlib', 'PyYAML'],
+    install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'codevalidator'],
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
