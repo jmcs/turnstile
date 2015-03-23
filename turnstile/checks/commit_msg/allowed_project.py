@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import git_hooks.checks as checks
-import git_hooks.common.output as output
+import turnstile.checks as checks
+import turnstile.common.output as output
 
 
 @checks.Check('Specification Project is allowed')
@@ -10,7 +10,7 @@ def check(user_configuration, repository_configuration, commit_message):
     """
     Check if the specification Project is allowed
 
-    >>> import git_hooks.models.message as message
+    >>> import turnstile.models.message as message
     >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', 'jira')
     >>> allow_cd = {'allowed-project': {'allowed': ['CD']}}
     >>> result = check(None, allow_cd, commit)

@@ -6,8 +6,8 @@ from __future__ import absolute_import
 import subprocess
 import re
 
-import git_hooks.checks as checks
-import git_hooks.common.output as output
+import turnstile.checks as checks
+import turnstile.common.output as output
 
 
 def remove_temporary_path(codevalidator_output, temporary__dir_path):

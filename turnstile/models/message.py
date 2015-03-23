@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import git_hooks.models.specifications as specfications
+import turnstile.models.specifications as specfications
 
 
 class CommitMessage(object):

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import git_hooks.checks as checks
-import git_hooks.common.output as output
+import turnstile.checks as checks
+import turnstile.common.output as output
 
 
 @checks.Check('Specification is valid')
@@ -10,7 +10,7 @@ def check(user_configuration, repository_configuration, commit_message):
     """
     Check if the specification is valid.
 
-    >>> import git_hooks.models.message as message
+    >>> import turnstile.models.message as message
 
     Jira tickets are validated according to a specific regex
     >>> commit1 = message.CommitMessage('something', 'CD-1 m€sságe', 'jira')

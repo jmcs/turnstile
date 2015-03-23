@@ -15,13 +15,13 @@ Alternative you can install it using setup.py
 
 Adding and removing turnstile from a repository
 -----------------------------------------------
-To use turnstile in a repository you have to run `git-hook install` inside the repository.
+To use turnstile in a repository you have to run `turnstile install` inside the repository.
 
-To remove turnstile from a repository you have to run `git-hook remove` inside the repository.
+To remove turnstile from a repository you have to run `turnstile remove` inside the repository.
 
 Configuring turnstile
 ---------------------
-You can configure the global hook behaviour by running `git-hook config`. 
+You can configure the global hook behaviour by running `turnstile config`.
 
 Currently you can only configure the hook verbosity.
 

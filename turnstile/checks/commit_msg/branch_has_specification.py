@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import git_hooks.checks as checks
-import git_hooks.common.output as output
+import turnstile.checks as checks
+import turnstile.common.output as output
 import re
 
 
@@ -11,7 +11,7 @@ def check(user_configuration, repository_configuration, commit_message):
     """
     Check if the branch name includes the specification.
 
-    >>> import git_hooks.models.message as message
+    >>> import turnstile.models.message as message
     >>> commit = message.CommitMessage('feature/CD-1', 'CD-1 message', 'jira')
     >>> result = check(None, {}, commit)
     >>> result.successful, result.details

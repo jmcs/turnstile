@@ -3,7 +3,7 @@
 
 from setuptools import setup, find_packages
 
-from git_hooks.version import version
+from turnstile.version import version
 
 setup(
     name='zalando-turnstile',
@@ -23,7 +23,7 @@ setup(
         'Topic :: Software Development :: Version Control',
     ],
     long_description='Turnstile - Zalando Local Git Hooks',
-    entry_points={'console_scripts': ['git-hooks = git_hooks.manager:manager',
-                                      'zalando-local-git-hooks-commit-msg = git_hooks.commit_msg:commit_msg',
-                                      'zalando-local-git-hooks-pre-commit = git_hooks.pre_commit:pre_commit']},
+    entry_points={'console_scripts': ['turnstile = turnstile.manager:manager',
+                                      'zalando-turnstile-commit-msg = turnstile.commit_msg:commit_msg',
+                                      'zalando-turnstile-pre-commit = turnstile.pre_commit:pre_commit']},
 )

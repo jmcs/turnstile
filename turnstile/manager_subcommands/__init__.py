@@ -14,7 +14,7 @@ commands = []
 for loader, module_name, is_pkg in pkgutil.walk_packages(__path__):
     name = '.' + module_name
     # import submodule git_hooks.manager_subcommands.*
-    sub_module = importlib.import_module(name, 'git_hooks.manager_subcommands')
+    sub_module = importlib.import_module(name, 'turnstile.manager_subcommands')
     try:
         commands.append(sub_module.cmd)
     except AttributeError:

@@ -3,8 +3,8 @@
 
 import re
 
-import git_hooks.checks as checks
-import git_hooks.common.output as output
+import turnstile.checks as checks
+import turnstile.common.output as output
 
 
 @checks.Check('Branch release is valid')
@@ -13,7 +13,7 @@ def check(user_configuration, repository_configuration, commit_message):
     Check if the release of release branches matches a pattern. By default this pattern is ^R(?:\d|\_|\.)+$ but it's
     configurable
 
-    >>> import git_hooks.models.message as message
+    >>> import turnstile.models.message as message
     >>> commit = message.CommitMessage('master', 'CD-1 message', 'jira')
     >>> result = check(None, {}, commit)
     Traceback (most recent call last):

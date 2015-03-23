@@ -10,9 +10,9 @@ import gitconfig
 import yaml
 import yaml.scanner
 
-import git_hooks.toolbox.collections as bus_collections
+import turnstile.toolbox.collections as bus_collections
 
-logger = logging.getLogger('githooks.config')
+logger = logging.getLogger('turnstile.config')
 
 
 def is_valid_log_verbosity(verbosity):
@@ -82,7 +82,7 @@ class UserConfiguration(object):
     Traceback (most recent call last):
         ...
     ValueError: "OTHER" is not a valid verbosity
-    >>> config.store['zalando.hooks.verbosity'] = 'BREAKSTUFF'
+    >>> config.store['turnstile.verbosity'] = 'BREAKSTUFF'
     >>> config.verbosity
     'INFO'
     """
@@ -98,7 +98,7 @@ class UserConfiguration(object):
         :return: Log Level
         :rtype: str
         """
-        verbosity = self.store.get('zalando.hooks.verbosity', 'INFO')
+        verbosity = self.store.get('turnstile.verbosity', 'INFO')
         if not is_valid_log_verbosity(verbosity):
             logger.warning('Invalid Verbosity "%s" falling back to INFO', verbosity)
             verbosity = 'INFO'
@@ -113,6 +113,6 @@ class UserConfiguration(object):
         :param value: new verbosity
         """
         if is_valid_log_verbosity(value):
-            self.store['zalando.hooks.verbosity'] = value
+            self.store['turnstile.verbosity'] = value
         else:
             raise ValueError('"{}" is not a valid verbosity'.format(value))

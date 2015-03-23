@@ -5,7 +5,7 @@ from __future__ import absolute_import
 
 import click
 
-import git_hooks.manager_subcommands as subcommands
+import turnstile.manager_subcommands as subcommands
 
 manager = click.Group()
 for command in subcommands.commands:

@@ -8,10 +8,10 @@ import sys
 import click
 import git
 
-import git_hooks.checks as checks
-import git_hooks.common.config as config
-import git_hooks.common.output as output
-import git_hooks.models.message as message
+import turnstile.checks as checks
+import turnstile.common.config as config
+import turnstile.common.output as output
+import turnstile.models.message as message
 
 
 @click.command()

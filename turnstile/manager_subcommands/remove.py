@@ -4,7 +4,7 @@ import pathlib
 
 import git
 
-import git_hooks.common.output as output
+import turnstile.common.output as output
 
 
 def remove_hook(name, path):

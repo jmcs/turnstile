@@ -4,10 +4,10 @@
 import collections
 import importlib
 
-import git_hooks.common.output as output
+import turnstile.common.output as output
 # we need to import the following modules so import will work on python3
-import git_hooks.checks.commit_msg  # noqa
-import git_hooks.checks.pre_commit  # noqa
+import turnstile.checks.commit_msg  # noqa
+import turnstile.checks.pre_commit  # noqa
 
 
 CheckResult = collections.namedtuple('CheckResult', ['successful', 'details'])
@@ -69,7 +69,7 @@ def load_check(hook_name, check_name):
     # TODO document where checks are stored and how in dev guide
     # TODO return none on error
     logger = output.get_sub_logger(hook_name, 'load_check')
-    checks_module = 'git_hooks.checks.' + hook_name.replace('-', '_')
+    checks_module = 'turnstile.checks.' + hook_name.replace('-', '_')
     sub_module_name = '.' + check_name.replace('-', '_')  # TODO document this change in dev guide
     logger.debug('Loading %s from %s', check_name, checks_module)
     try:

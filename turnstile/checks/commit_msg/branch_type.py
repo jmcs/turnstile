@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import git_hooks.checks as checks
-import git_hooks.common.output as output
+import turnstile.checks as checks
+import turnstile.common.output as output
 
 
 @checks.Check('Branch type is valid')
@@ -12,7 +12,7 @@ def check(user_configuration, repository_configuration, commit_message):
     a feature branch.
 
     By default only master is allowed
-    >>> import git_hooks.models.message as message
+    >>> import turnstile.models.message as message
     >>> commit = message.CommitMessage('master', 'CD-1 message', 'jira')
     >>> result = check(None, {}, commit)
     >>> result.successful, result.details

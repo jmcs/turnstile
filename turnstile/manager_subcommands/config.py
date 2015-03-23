@@ -1,6 +1,6 @@
 import click
 
-import git_hooks.common.config as config
+import turnstile.common.config as config
 
 
 @click.command('config')
