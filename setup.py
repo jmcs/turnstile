@@ -6,13 +6,12 @@ from setuptools import setup, find_packages
 from git_hooks.version import version
 
 setup(
-    name='Zalando Git Hooks',
+    name='zalando-turnstile',
     packages=find_packages(),
     version=version,
-    description='Zalando Local Git Hooks',
-    author='João Santos',
-    author_email='joao.santos@zalando.de',
-    url='https://stash.zalando.net/projects/PYMODULES/repos/zalando-githooks/browse',
+    description='Turnstile - Zalando Local Git Hooks',
+    author='Zalando SE',
+    url='https://github.com/zalando-bus/turnstile',
     install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'codevalidator'],
     classifiers=[
         'Programming Language :: Python',
@@ -23,7 +22,7 @@ setup(
         'Operating System :: OS Independent',
         'Topic :: Software Development :: Version Control',
     ],
-    long_description='Zalando Local Git Hooks',
+    long_description='Turnstile - Zalando Local Git Hooks',
     entry_points={'console_scripts': ['git-hooks = git_hooks.manager:manager',
                                       'zalando-local-git-hooks-commit-msg = git_hooks.commit_msg:commit_msg',
                                       'zalando-local-git-hooks-pre-commit = git_hooks.pre_commit:pre_commit']},
