@@ -12,6 +12,7 @@ setup(
     description='Turnstile - Zalando Local Git Hooks',
     author='Zalando SE',
     url='https://github.com/zalando-bus/turnstile',
+    license='Apache License Version 2.0',
     install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'codevalidator'],
     classifiers=[
         'Programming Language :: Python',
