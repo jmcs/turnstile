@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/zalando-bus/turnstile.svg?branch=master)](https://travis-ci.org/zalando-bus/turnstile)
+[![Latest Version](https://pypip.in/version/zalando-turnstile/badge.svg)](https://pypi.python.org/pypi/zalando-turnstile)
+[![Development Status](https://pypip.in/status/zalando-turnstile/badge.svg)](https://pypi.python.org/pypi/zalando-turnstile)
+
 Turnstile - Zalando Local Git Hooks
 ===================================
 
