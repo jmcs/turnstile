@@ -47,7 +47,7 @@ def load_repository_configuration(repository_path):
     :rtype: dict
     """
     repository_path = pathlib.Path(repository_path)
-    config_path = repository_path / 'hooks.config'
+    config_path = repository_path / '.turnstile.yml'
     try:
         with config_path.open() as config_file:
             # If the configuration file is empty safe_load returns None and we want a dict
