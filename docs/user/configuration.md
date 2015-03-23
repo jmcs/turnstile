@@ -1,8 +1,6 @@
 Repository Configuration
 ========================
 
-<!-- TODO add link to specification check -->
-
 Common Parameters
 -----------------
 
