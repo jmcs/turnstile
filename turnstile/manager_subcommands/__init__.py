@@ -6,7 +6,6 @@ from __future__ import print_function
 import importlib
 import pkgutil
 
-# TODO document this
 # Fetch click commands from submodules from git_hooks.manager_subcommands
 # The click command functions should be named cmd
 

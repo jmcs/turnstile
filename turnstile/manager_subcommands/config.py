@@ -12,7 +12,6 @@ def cmd():
 
     user_config = config.UserConfiguration()
 
-    # TODO move this to a question cli util
     current_verbosity = user_config.verbosity
     verbosity_levels = ['WARNING', 'INFO', 'DEBUG']
     print('Select the git hook verbosity (Current Value {}):'.format(current_verbosity))

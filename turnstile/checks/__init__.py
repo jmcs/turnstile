@@ -66,11 +66,9 @@ def load_check(hook_name, check_name):
     :rtype: function
     """
 
-    # TODO document where checks are stored and how in dev guide
-    # TODO return none on error
     logger = output.get_sub_logger(hook_name, 'load_check')
     checks_module = 'turnstile.checks.' + hook_name.replace('-', '_')
-    sub_module_name = '.' + check_name.replace('-', '_')  # TODO document this change in dev guide
+    sub_module_name = '.' + check_name.replace('-', '_')
     logger.debug('Loading %s from %s', check_name, checks_module)
     try:
         sub_module = importlib.import_module(sub_module_name, checks_module)

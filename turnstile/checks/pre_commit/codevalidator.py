@@ -49,7 +49,6 @@ def check(user_configuration, repository_configuration, staging_area):
 
     logger = output.get_sub_logger('pre-commit', 'codevalidator')
     logger.debug('Starting Codevalidator check...')
-    # TODO add codevalidatorrc option
     if not staging_area.changes:
         logger.debug('No files to check.')
         raise checks.CheckIgnore

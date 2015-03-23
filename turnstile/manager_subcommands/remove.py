@@ -42,7 +42,6 @@ def cmd(verbosity):
     try:
         repository = git.Repo()
     except git.InvalidGitRepositoryError:
-        # TODO ERROR function
         logger.error('This command should be run inside a git repository')
         exit(-1)
 
