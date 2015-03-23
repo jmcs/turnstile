@@ -54,7 +54,7 @@ def check(user_configuration, repository_configuration, staging_area):
         logger.debug('No files to check.')
         raise checks.CheckIgnore
 
-    codevalidator_rc = staging_area.working_dir / 'codevalidatorrc'
+    codevalidator_rc = staging_area.working_dir / '.codevalidatorrc'
 
     with staging_area:
         arguments = ['codevalidator', '-v']
