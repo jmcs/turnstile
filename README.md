@@ -33,5 +33,9 @@ Repository Configuration
 ------------------------
 To use Turnstile you need to add a configuration file named `.turnstile.yml` to your repository.
 
-You can find an example configuration in [turnstile repository](.turnstile.yml) and you can read can learn more about
-the configuration options in the [documentation](docs/user/configuration.md).
+You can find an example configuration in [turnstile repository](turnstile.yml.example) and you can read can learn more
+about the configuration options in the [documentation](docs/user/configuration.md).
+
+Known Issues
+------------
+When you run turnstile in a new repository (i.e. a repository without commits) the hooks will not see any file changes.

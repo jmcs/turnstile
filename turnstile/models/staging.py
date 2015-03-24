@@ -26,10 +26,14 @@ class StagingArea(object):
         self.temporary_directory = None
         self.files = []  # this will be populated with the temporary files
 
-        diff = repository.head.commit.diff()
-        added_changes = diff.iter_change_type('A')
-        modified_changes = diff.iter_change_type('M')
-        self.changes = list(itertools.chain(added_changes, modified_changes))
+        if repository.active_branch.is_valid():
+            diff = repository.head.commit.diff()
+            added_changes = diff.iter_change_type('A')
+            modified_changes = diff.iter_change_type('M')
+            self.changes = list(itertools.chain(added_changes, modified_changes))
+        else:
+            # if the branch still doesn't have commits the diff will fail
+            self.changes = []
 
         self.working_dir = pathlib.Path(repository.working_dir)
 
