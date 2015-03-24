@@ -2,6 +2,7 @@ checks:
     - specification
     - branch-has-specification
     - allowed-project
+    - branch-pattern
     - branch-release
     - codevalidator
 specification:
@@ -13,5 +14,13 @@ allowed-project:
     allowed:
         - PF
         - CD
+branch-pattern:
+    allowed:
+        - '^release/R'
+        - '^feature/'
+branch-type:
+    allowed:
+        - release
+        - feature
 branch-release:
-    pattern: '^v(?:\d|\_|\.)+$'
+    pattern: '^R(?:\d|\_|\.)+$'
