@@ -3,6 +3,7 @@ checks:
     - branch-has-specification
     - allowed-project
     - branch-pattern
+    - branch-type
     - branch-release
     - codevalidator
 specification:
