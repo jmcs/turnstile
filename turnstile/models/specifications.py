@@ -119,41 +119,52 @@ class JIRASpecification(Specification):
         return bool(matches)
 
 
-def get_specification(commit_message, specification_format=None):
+def get_specification(commit_message, default_specification_format=None):
     """
-    Gets the right specification instance for specification_format and commit_message
+    Extracts the specification URI from the commit_message and creates the appropriate specification instance based on
+    the URI scheme. If scheme is missing from the URI the default_specification_format will be used.
 
-    >>> s1 = get_specification('something', None)
-    >>> type(s1) == Specification
+    >>> spec = get_specification('something', None)
+    >>> type(spec) == Specification
     True
 
-    >>> s2 = get_specification('something', 'jira')
-    >>> type(s2) == JIRASpecification
+    >>> spec = get_specification('something', 'jira')
+    >>> type(spec) == JIRASpecification
     True
 
-    >>> s3 = get_specification('something', 'invalidstuff')
+    >>> spec = get_specification('jira:something', None)
+    >>> type(spec) == JIRASpecification
+    True
+
+    >>> spec = get_specification('something', 'invalidstuff')
     Traceback (most recent call last):
         ...
     ValueError: Invalid Specification Type
 
-    :type specification_type:str
     :type commit_message:str
+    :type default_specification_format:str
     :return: BaseSpecification
     """
     try:
-        specification_id, _ = commit_message.split(' ', 1)
+        specification_uri, _ = commit_message.split(' ', 1)
     except ValueError:
         # If there is only one word (the spec) split will fail
-        specification_id = commit_message
+        specification_uri = commit_message
+
+    if ':' in specification_uri:
+        specification_scheme, specification_path = specification_uri.split(':', 1)
+    else:
+        specification_scheme = default_specification_format if default_specification_format else 'generic'
+        specification_path = specification_uri
 
     try:
-        specification_class = _format_class_map[specification_format]
+        specification_class = _format_class_map[specification_scheme]
     except KeyError:
         raise ValueError('Invalid Specification Type')
-    return specification_class(specification_id)
+    return specification_class(specification_path)
 
 
 _format_class_map = {
-    None: Specification,  # by default it's a boring Specification without validation
+    'generic': Specification,  # by default it's a boring Specification without validation
     'jira': JIRASpecification,
 }
