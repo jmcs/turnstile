@@ -9,7 +9,6 @@ class BaseSpecification(object):
     _metaclass__ = abc.ABCMeta
 
     format = 'Generic Specification'
-    format = 'Generic Specification'
 
     @property
     @abc.abstractmethod
