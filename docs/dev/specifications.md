@@ -13,5 +13,9 @@ Schemes
 Generic specification without a special meaning. Generic specifications are always valid.
 This format is used by default if scheme is missing from the URI and there is no default scheme for the repository.
 
-### Jira
-Jira specification URIs take the form of “jira:PROJECT-TICKET_NUMBER” for example “jira:CD-123”
+### JIRA
+JIRA specification URIs take the form of “jira:PROJECT-TICKET_NUMBER” for example “jira:CD-123”
+
+### Github
+Github specifications URIs take the form of “github:ISSUE_NUMBER” where ISSUE_NUMBER is the number of the specification
+on the repository
