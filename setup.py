@@ -13,7 +13,7 @@ setup(
     author='Zalando SE',
     url='https://github.com/zalando-bus/turnstile',
     license='Apache License Version 2.0',
-    install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'codevalidator'],
+    install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'codevalidator', 'rfc3986'],
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',

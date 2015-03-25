@@ -19,3 +19,6 @@ JIRA specification URIs take the form of “jira:PROJECT-TICKET_NUMBER” for ex
 ### Github
 Github specifications URIs take the form of “github:ISSUE_NUMBER” where ISSUE_NUMBER is the number of the specification
 on the repository
+
+### HTTP(S)
+Specifications can also be http and https urls.
