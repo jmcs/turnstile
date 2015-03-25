@@ -119,6 +119,32 @@ class JIRASpecification(Specification):
         return bool(matches)
 
 
+class GithubSpecification(Specification):
+    """
+    Github issue as specification
+
+    >>> spec = GithubSpecification('CD-1000')
+    >>> str(spec)
+    'CD-1000'
+
+    >>> spec = GithubSpecification('1000')
+    >>> str(spec)
+    '1000'
+    """
+    format = 'Github'
+
+    def is_valid(self):
+        """
+        >>> GithubSpecification('1000').is_valid()
+        True
+        >>> GithubSpecification('PF-1000').is_valid()
+        False
+        >>> GithubSpecification('1.1').is_valid()
+        False
+        """
+        return self._id.isdigit()
+
+
 def get_specification(commit_message, default_specification_format=None):
     """
     Extracts the specification URI from the commit_message and creates the appropriate specification instance based on
@@ -136,6 +162,10 @@ def get_specification(commit_message, default_specification_format=None):
     >>> type(spec) == JIRASpecification
     True
 
+    >>> spec = get_specification('#github:something')
+    >>> type(spec) == GithubSpecification
+    True
+
     >>> spec = get_specification('something', 'invalidstuff')
     Traceback (most recent call last):
         ...
@@ -150,6 +180,8 @@ def get_specification(commit_message, default_specification_format=None):
     except ValueError:
         # If there is only one word (the spec) split will fail
         specification_uri = commit_message
+
+    specification_uri = specification_uri.lstrip('#')  # remove the initial # from the specification
 
     if ':' in specification_uri:
         specification_scheme, specification_path = specification_uri.split(':', 1)
@@ -167,4 +199,5 @@ def get_specification(commit_message, default_specification_format=None):
 _format_class_map = {
     'generic': Specification,  # by default it's a boring Specification without validation
     'jira': JIRASpecification,
+    'github': GithubSpecification,
 }
