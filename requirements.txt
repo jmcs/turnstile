@@ -3,3 +3,4 @@ GitPython
 MapGitConfig
 pathlib
 PyYAML
+rfc3986
