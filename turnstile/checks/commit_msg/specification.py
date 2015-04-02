@@ -23,6 +23,12 @@ def check(user_configuration, repository_configuration, commit_message):
     >>> result_2.successful, result_2.details
     (False, ['invalid-1 is not a valid specification URI.'])
 
+    >>> commit_3 = message.CommitMessage('something', 'Merge stuff')
+    >>> result_3 = check(None, None, commit_3)
+    Traceback (most recent call last):
+        ...
+    CheckIgnore
+
     :param user_configuration: User specific configuration
     :type user_configuration: git_hooks.common.config.UserConfiguration
     :param repository_configuration: Repository specific configuration
@@ -36,6 +42,10 @@ def check(user_configuration, repository_configuration, commit_message):
     logger = output.get_sub_logger('commit-msg', 'specification')
     logger.debug('Starting specification check...')
     logger.debug('Commit Message: %s', commit_message.message)
+
+    if commit_message.message.startswith('Merge'):
+        logger.debug("Commit is a merge, ignoring.")
+        raise checks.CheckIgnore
 
     result = checks.CheckResult()
     specification = commit_message.specification
