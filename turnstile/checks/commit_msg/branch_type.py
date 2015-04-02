@@ -54,7 +54,6 @@ def check(user_configuration, repository_configuration, commit_message):
     logger.debug('Branch: %s', branch)
 
     check_options = repository_configuration.get('branch-type', {})
-
     allowed = check_options.get('allowed', [])
 
     logger.debug('Allowed Patterns: %s', allowed)

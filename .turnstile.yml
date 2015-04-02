@@ -3,6 +3,6 @@ checks:
     - branch-release
     - codevalidator
 specification:
-    format: 'jira'
+    allowed_schemes: ['https']
 branch-release:
     pattern: '^v(?:\d|\_|\.)+$'
