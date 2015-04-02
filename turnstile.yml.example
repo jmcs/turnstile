@@ -1,20 +1,9 @@
 checks:
     - specification
-    - branch-has-specification
-    - allowed-project
     - branch-pattern
     - branch-type
     - branch-release
     - codevalidator
-specification:
-    format: 'jira'
-branch-has-specification:
-    exceptions:
-        - '^release/'
-allowed-project:
-    allowed:
-        - PF
-        - CD
 branch-pattern:
     allowed:
         - '^release/R'

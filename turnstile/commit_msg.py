@@ -55,9 +55,7 @@ def commit_msg(message_file_path):
         raise click.Abort
     logger.debug('Commit Message: %s', str_commit_message)
 
-    specification_options = repository_configuration.get('specification', {})
-    specification_format = specification_options.get('format')
-    commit_message = message.CommitMessage(branch, str_commit_message, specification_format)
+    commit_message = message.CommitMessage(branch, str_commit_message)
     logger.debug('Specification: %s', commit_message.specification)
 
     failed_checks = checks.run_checks('commit-msg', user_configuration, repository_configuration, commit_message)

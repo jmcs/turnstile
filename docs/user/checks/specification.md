@@ -1,10 +1,9 @@
 Specification Check
 -------------------
 
-Checks if a specification id is valid. By default, if no specification format is provided in the repository
-configuration, no validation is performed.
+Checks if a specification URI is a valid and absolute. This check is ignored for merge commits.
 
-Currently the only supported format is 'jira':
+By default only HTTPS and offline URIs are accepted but you can change the allowed schemes:
 
     specification:
-        format: 'jira'
+        allowed_schemes: ['https', 'ftp']
