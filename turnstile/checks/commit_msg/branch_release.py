@@ -16,29 +16,29 @@ def check(user_configuration, repository_configuration, commit_message):
     configurable
 
     >>> import turnstile.models.message as message
-    >>> commit = message.CommitMessage('master', 'CD-1 message', 'jira')
+    >>> commit = message.CommitMessage('master', 'https://github.com/zalando-bus/turnstile/issues/42 message')
     >>> result = check(None, {}, commit)
     Traceback (most recent call last):
         ...
     CheckIgnore
 
-    >>> commit = message.CommitMessage('feature/whatever', 'CD-1 message', 'jira')
+    >>> commit = message.CommitMessage('feature/whatever', 'https://github.com/zalando-bus/turnstile/issues/42 message')
     >>> result = check(None, {}, commit)
     Traceback (most recent call last):
         ...
     CheckIgnore
 
-    >>> commit = message.CommitMessage('release/R10_00', 'CD-1 message', 'jira')
+    >>> commit = message.CommitMessage('release/R10_00', 'https://github.com/zalando-bus/turnstile/issues/42 message')
     >>> result = check(None, {}, commit)
     >>> result.successful, result.details
     (True, [])
 
-    >>> commit = message.CommitMessage('release/10_00', 'CD-1 message', 'jira')
+    >>> commit = message.CommitMessage('release/10_00', 'https://github.com/zalando-bus/turnstile/issues/42 message')
     >>> result = check(None, {}, commit)
     >>> result.successful, len(result.details)
     (False, 1)
 
-    >>> commit = message.CommitMessage('release/10_00', 'CD-1 message', 'jira')
+    >>> commit = message.CommitMessage('release/10_00', 'https://github.com/zalando-bus/turnstile/issues/42 message')
     >>> result = check(None, {'branch-release': {'pattern': '.*'}}, commit)
     >>> result.successful, result.details
     (True, [])
