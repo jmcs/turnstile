@@ -59,6 +59,7 @@ def check(user_configuration, repository_configuration, commit_message):
 
     check_options = repository_configuration.get('specification', {})
     allowed_schemes = check_options.get('allowed_schemes', ['https', 'offline'])
+    logger.debug("Allowed schemes: %s", allowed_schemes)
 
     result = checks.CheckResult()
     specification = commit_message.specification
