@@ -14,6 +14,7 @@ def cmd():
     """
     repository = git.Repo()
     staging_area = staging.StagingArea(repository)
-    result = codevalidator.check(None, None, staging_area)
-    for detail in result.details:
-        print(detail)
+    codevalidator_rc = staging_area.working_dir / '.codevalidatorrc'
+    with staging_area:
+        output = codevalidator.codevalidator(staging_area.files, custom_config=codevalidator_rc)
+    print(output)
