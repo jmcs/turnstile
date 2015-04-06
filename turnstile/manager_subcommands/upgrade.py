@@ -38,7 +38,6 @@ def cmd():
     """
     Upgrade Turnstile
     """
-    # TODO confirm before upgrade
     pypi_version = get_pypi_version()
     local_version = du_version.LooseVersion(version.version)
 
