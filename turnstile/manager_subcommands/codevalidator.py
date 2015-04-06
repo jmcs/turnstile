@@ -16,5 +16,6 @@ def cmd():
     staging_area = staging.StagingArea(repository)
     codevalidator_rc = staging_area.working_dir / '.codevalidatorrc'
     with staging_area:
-        output = codevalidator.codevalidator(staging_area.files, custom_config=codevalidator_rc)
+        output = codevalidator.codevalidator(staging_area.files, temporary_dir=staging_area.temporary_directory,
+                                             custom_config=codevalidator_rc)
     print(output)
