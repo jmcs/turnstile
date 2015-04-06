@@ -4,3 +4,4 @@ MapGitConfig
 pathlib
 PyYAML
 rfc3986
+codevalidator
