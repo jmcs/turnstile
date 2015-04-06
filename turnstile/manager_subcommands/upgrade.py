@@ -1,8 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from __future__ import print_function
 
 import distutils.version as du_version
 
 import click
+import pip
 import requests
 
 import turnstile.version as version
@@ -22,11 +26,16 @@ def get_pypi_version():
     return du_version.LooseVersion(pypi_version)
 
 
+def upgrade_turnstile():
+    pip.main(['install', '--upgrade', 'zalando-turnstile'])
+
+
 @click.command('upgrade')
 def cmd():
     """
-    Print Turnstile version
+    Upgrade Turnstile
     """
+    # TODO confirm before upgrade
     pypi_version = get_pypi_version()
     local_version = du_version.LooseVersion(version.version)
     if pypi_version is None:
@@ -37,4 +46,4 @@ def cmd():
     if local_version >= pypi_version:
         print('Turnstile is already updated')
     else:
-        print('Needs to update')
+        upgrade_turnstile()
