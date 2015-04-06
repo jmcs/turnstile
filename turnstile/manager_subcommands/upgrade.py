@@ -27,6 +27,9 @@ def get_pypi_version():
 
 
 def upgrade_turnstile():
+    """
+    Use pip to upgrade turnstile
+    """
     pip.main(['install', '--upgrade', 'zalando-turnstile'])
 
 
@@ -38,12 +41,15 @@ def cmd():
     # TODO confirm before upgrade
     pypi_version = get_pypi_version()
     local_version = du_version.LooseVersion(version.version)
+
     if pypi_version is None:
         print('Error fetching data from pypi.')
         raise click.Abort
-    print('Local Version - ', local_version)
-    print('Pypi Version - ', pypi_version)
+
     if local_version >= pypi_version:
-        print('Turnstile is already updated')
+        print('Turnstile is already updated.')
     else:
-        upgrade_turnstile()
+        print('Local Version - ', local_version)
+        print('Pypi Version - ', pypi_version)
+        if click.confirm('Do you want to update turnstile?'):
+            upgrade_turnstile()

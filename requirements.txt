@@ -6,3 +6,4 @@ PyYAML
 rfc3986
 codevalidator
 requests
+pip
