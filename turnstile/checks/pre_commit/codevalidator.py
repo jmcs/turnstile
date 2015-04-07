@@ -33,7 +33,7 @@ def codevalidator(files_to_check, temporary_dir=None, custom_config=None, fix=Fa
         arguments.extend(['-c', str(custom_config.resolve())])
 
     if fix:
-        arguments.append('-f', '--no-backup')
+        arguments.extend(['-f', '--no-backup'])
 
     logger.debug('Command Arguments: %s', arguments)
 
