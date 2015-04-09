@@ -10,6 +10,46 @@ import turnstile.checks as checks
 import turnstile.common.output as output
 
 
+def codevalidator(files_to_check, temporary_dir=None, custom_config=None, fix=False):
+    """
+    Wrapper around codevalidator
+
+    :param files_to_check: list of files to check
+    :type files_to_check: list
+    :param temporary_dir: temporary dir used, this is used to remove it from the output
+    :param custom_config: path to custom codevalidatorrc if any
+    :type custom_config: pathlib.Path
+    :param fix: whether to try to fix the files or not
+    :type fix: bool
+    :return: codevalidator output
+    """
+
+    logger = output.get_sub_logger('pre-commit', 'codevalidator')
+
+    arguments = ['codevalidator', '-v']
+    arguments.extend(str(path) for path in files_to_check)
+
+    if custom_config.is_file:
+        arguments.extend(['-c', str(custom_config.resolve())])
+
+    if fix:
+        arguments.extend(['-f', '--no-backup'])
+
+    logger.debug('Command Arguments: %s', arguments)
+
+    process = subprocess.Popen(arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    logger.debug('Standard Output: %s', stdout)
+    logger.debug('Standard Error: %s', stderr)
+
+    codevalidator_output = stdout + stderr
+
+    if temporary_dir:
+        codevalidator_output = remove_temporary_path(codevalidator_output, temporary_dir)
+
+    return codevalidator_output
+
+
 def remove_temporary_path(codevalidator_output, temporary__dir_path):
     """
     Removes the temporary dir path from the file paths
@@ -42,7 +82,7 @@ def check(user_configuration, repository_configuration, staging_area):
     :param staging_area:
     :type staging_area: git_hooks.models.staging.StagingArea
     :return: If check passed or not
-    :rtype: bool
+    :rtype: turnstile.checks.CheckResult
     """
 
     result = checks.CheckResult()
@@ -56,22 +96,11 @@ def check(user_configuration, repository_configuration, staging_area):
     codevalidator_rc = staging_area.working_dir / '.codevalidatorrc'
 
     with staging_area:
-        arguments = ['codevalidator', '-v']
-        arguments.extend(str(path) for path in staging_area.files)
-
-        if codevalidator_rc.is_file:
-            arguments.extend(['-c', str(codevalidator_rc.resolve())])
-
-        logger.debug('Command Arguments: %s', arguments)
-
-        process = subprocess.Popen(arguments, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        stdout, stderr = process.communicate()
-        logger.debug('Standard Output: %s', stdout)
-        logger.debug('Standard Error: %s', stderr)
-
-        codevalidator_output = stdout+stderr
+        codevalidator_output = codevalidator(files_to_check=staging_area.files,
+                                             temporary_dir=staging_area.temporary_directory,
+                                             custom_config=codevalidator_rc)
         result.successful = not codevalidator_output
         if not result.successful:
-            result.details.append(remove_temporary_path(codevalidator_output, staging_area.temporary_directory))
+            result.details.append(codevalidator_output)
 
     return result
