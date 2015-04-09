@@ -2,3 +2,4 @@
 dist
 zalando_turnstile.egg-info
 build
+*.pyc
