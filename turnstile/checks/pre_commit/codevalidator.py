@@ -29,7 +29,7 @@ def codevalidator(files_to_check, temporary_dir=None, custom_config=None, fix=Fa
     arguments = ['codevalidator', '-v']
     arguments.extend(str(path) for path in files_to_check)
 
-    if custom_config.is_file:
+    if custom_config.is_file():
         arguments.extend(['-c', str(custom_config.resolve())])
 
     if fix:
