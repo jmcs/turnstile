@@ -2,6 +2,7 @@ checks:
     - specification
     - branch-release
     - codevalidator
+    - protect-master
 specification:
     allowed_schemes: ['https']
 branch-release:
