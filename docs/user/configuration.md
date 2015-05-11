@@ -19,4 +19,5 @@ List of checks
 - [Branch Release](checks/branch-release.md) - Check if release branches names contain a valid release name
 - [Branch Type](checks/branch-type.md) - Check if branch type is allowed
 - [Codevalidator](checks/codevalidator.md) - Check if committed files pass code validation
+- [Protect Master](checks/protect-master.md) - Prevents commits to master
 - [Specification](checks/specification.md) - Check if commit message contains a valid specification
