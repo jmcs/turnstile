@@ -1,7 +1,24 @@
-[![Build Status](https://travis-ci.org/zalando-bus/turnstile.svg?branch=master)](https://travis-ci.org/zalando/turnstile)
-[![Latest Version](https://pypip.in/version/zalando-turnstile/badge.svg)](https://pypi.python.org/pypi/zalando-turnstile)
-[![Development Status](https://pypip.in/status/zalando-turnstile/badge.svg)](https://pypi.python.org/pypi/zalando-turnstile)
-[![License](https://img.shields.io/pypi/l/zalando-turnstile.svg)](https://github.com/zalando/turnstile/blob/master/LICENSE.txt)
+.. image:: https://travis-ci.org/zalando/turnstile.svg?branch=master
+   :target: https://travis-ci.org/zalando/turnstile
+   :alt: Build Status
+
+.. image:: https://coveralls.io/repos/zalando/turnstile/badge.svg?branch=master
+  :target: https://coveralls.io/r/zalando/turnstile?branch=master
+  :alt: Code Coverage
+
+.. image:: https://pypip.in/version/turnstile/badge.svg
+   :target: https://pypi.python.org/pypi/turnstile
+   :alt: Latest Version
+
+.. image:: https://pypip.in/status/turnstile/badge.svg
+   :target: https://pypi.python.org/pypi/turnstile
+   :alt: Development Status
+
+.. image:: https://img.shields.io/pypi/l/turnstile.svg
+   :target: https://github.com/zalando/turnstile/blob/master/LICENSE
+   :alt: License
+
+
 Turnstile - Zalando Local Git Hooks
 ===================================
 
