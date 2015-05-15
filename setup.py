@@ -1,9 +1,32 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
+
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
+
 
 from turnstile.version import version
+
+
+class PyTest(TestCommand):
+
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.cov = None
+        self.pytest_args = ['--cov', 'turnstile', '--cov-report', 'term-missing', '--doctest-modules', 'turnstile']
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        import pytest
+        errno = pytest.main(self.pytest_args)
+        sys.exit(errno)
+
 
 setup(
     name='zalando-turnstile',
@@ -15,6 +38,8 @@ setup(
     license='Apache License Version 2.0',
     install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'codevalidator', 'rfc3986', 'MapGitConfig',
                       'requests', 'pip'],
+    tests_require=['pytest-cov', 'pytest'],
+    cmdclass={'test': PyTest},
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
