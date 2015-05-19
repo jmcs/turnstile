@@ -50,13 +50,13 @@ Repository Configuration
 ------------------------
 To use Turnstile you need to add a configuration file named `.turnstile.yml` to your repository.
 
-You can find an example configuration in [turnstile repository](turnstile.yml.example) and you can read can learn more
-about the configuration options in the [documentation](docs/user/configuration.md).
+You can find an example configuration in `turnstile repository <turnstile.yml.example>`_ and you can read can learn more
+about the configuration options in the `documentation <docs/user/configuration.md>`_.
 
 Other subcommands
 -----------------
 Turnstile has several useful subcommands available. You can check them in the
-[subcommand list](docs/user/subcommands.md).
+`subcommand list <docs/user/subcommands.md>`_.
 
 Known Issues
 ------------
