@@ -10,7 +10,7 @@
    :target: https://pypi.python.org/pypi/turnstile-core/
    :alt: Latest PyPI version
 
-.. image:: https://img.shields.io/pypi/l/turnstile.svg
+.. image:: https://img.shields.io/pypi/l/turnstile-core.svg
    :target: https://github.com/zalando/turnstile/blob/master/LICENSE
    :alt: License
 
