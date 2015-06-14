@@ -6,15 +6,11 @@
   :target: https://coveralls.io/r/zalando/turnstile?branch=master
   :alt: Code Coverage
 
-.. image:: https://pypip.in/version/turnstile/badge.svg
-   :target: https://pypi.python.org/pypi/turnstile
-   :alt: Latest Version
+.. image:: https://img.shields.io/pypi/v/turnstile-core.svg
+   :target: https://pypi.python.org/pypi/turnstile-core/
+   :alt: Latest PyPI version
 
-.. image:: https://pypip.in/status/turnstile/badge.svg
-   :target: https://pypi.python.org/pypi/turnstile
-   :alt: Development Status
-
-.. image:: https://img.shields.io/pypi/l/turnstile.svg
+.. image:: https://img.shields.io/pypi/l/turnstile-core.svg
    :target: https://github.com/zalando/turnstile/blob/master/LICENSE
    :alt: License
 
@@ -60,9 +56,9 @@ Turnstile has several useful subcommands available. You can check them in the
 
 Adding subcommands
 ------------------
-Turnstile looks for command extensions in 'turnstile.commands' entry points.
+Turnstile looks for command extensions in `turnstile.commands` entry points.
 
-To make a new subcommand create a 'click <http://click.pocoo.org>`_ command named `cmd` and add the module with command
+To make a new subcommand create a `click <http://click.pocoo.org>`_ command named `cmd` and add the module with command
 to your setup.py entry points in the 'turnstile.commands' group.
 
 Known Issues

@@ -29,10 +29,13 @@ def get_commands():
     The click command functions should be named cmd
     :rtype: Iterator[str, Callable]
     """
-    for entrypoint in pkg_resources.iter_entry_points('turnstile.commands'):
-        module = entrypoint.load()
+    for entry_point in pkg_resources.iter_entry_points('turnstile.commands'):
+        try:
+            module = entry_point.load()
+        except ImportError:
+            continue  # ignore broken commands
         command = module.cmd  # type: FunctionType
-        yield entrypoint.name, command
+        yield entry_point.name, command
 
 
 for name, command in get_commands():
@@ -40,4 +43,4 @@ for name, command in get_commands():
 
 
 if __name__ == '__main__':
-    manager()
+    manager()  # pragma: no cover

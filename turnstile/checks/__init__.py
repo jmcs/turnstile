@@ -1,6 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Copyright 2015 Zalando SE
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the
+License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific
+language governing permissions and limitations under the License.
+"""
+
 import pkg_resources
 
 import turnstile.common.output as output
@@ -57,9 +70,15 @@ def get_checks(hook_name):
     :type hook_name: str
     :rtype: [str, FunctionType]
     """
+    logger = output.get_sub_logger(hook_name.replace('_', '-'), 'get_checks')
+
     group_name = 'turnstile.{}'.format(hook_name)
     for entry_point in pkg_resources.iter_entry_points(group_name):
-        module = entry_point.load()
+        try:
+            module = entry_point.load()
+        except ImportError:
+            logger.error('%s not found', entry_point.name)
+            continue
         check = module.check  # type: FunctionType
         yield entry_point.name, check
 
