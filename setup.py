@@ -29,15 +29,14 @@ class PyTest(TestCommand):
 
 
 setup(
-    name='zalando-turnstile',
+    name='turnstile-core',
     packages=find_packages(),
     version=version,
     description='Turnstile - Zalando Local Git Hooks',
     author='Zalando SE',
-    url='https://github.com/zalando-bus/turnstile',
+    url='https://github.com/zalando/turnstile',
     license='Apache License Version 2.0',
-    install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'codevalidator', 'rfc3986', 'MapGitConfig',
-                      'requests', 'pip'],
+    install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'rfc3986', 'MapGitConfig', 'requests', 'pip'],
     tests_require=['pytest-cov', 'pytest'],
     cmdclass={'test': PyTest},
     classifiers=[
@@ -53,8 +52,7 @@ setup(
     entry_points={'console_scripts': ['turnstile = turnstile.manager:manager',
                                       'zalando-turnstile-commit-msg = turnstile.commit_msg:commit_msg',
                                       'zalando-turnstile-pre-commit = turnstile.pre_commit:pre_commit'],
-                  'turnstile.commands': ['codevalidator = turnstile.manager_subcommands.codevalidator',
-                                         'config = turnstile.manager_subcommands.config',
+                  'turnstile.commands': ['config = turnstile.manager_subcommands.config',
                                          'install = turnstile.manager_subcommands.install',
                                          'remove = turnstile.manager_subcommands.remove',
                                          'upgrade = turnstile.manager_subcommands.upgrade',
@@ -63,6 +61,5 @@ setup(
                                            'branch_release = turnstile.checks.commit_msg.branch_release',
                                            'branch_type = turnstile.checks.commit_msg.branch:type',
                                            'protect_master = turnstile.checks.commit_msg.protect_master',
-                                           'specification = turnstile.checks.commit_msg.specification'],
-                  'turnstile.pre_commit': ['codevalidator = turnstile.checks.pre_commit.codevalidator']}
+                                           'specification = turnstile.checks.commit_msg.specification']}
 )
