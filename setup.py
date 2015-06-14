@@ -58,5 +58,11 @@ setup(
                                          'install = turnstile.manager_subcommands.install',
                                          'remove = turnstile.manager_subcommands.remove',
                                          'upgrade = turnstile.manager_subcommands.upgrade',
-                                         'version = turnstile.manager_subcommands.version'],}
+                                         'version = turnstile.manager_subcommands.version'],
+                  'turnstile.commit_msg': ['branch_pattern = turnstile.checks.commit_msg.branch_pattern',
+                                           'branch_release = turnstile.checks.commit_msg.branch_release',
+                                           'branch_type = turnstile.checks.commit_msg.branch:type',
+                                           'protect_master = turnstile.checks.commit_msg.protect_master',
+                                           'specification = turnstile.checks.commit_msg.specification'],
+                  'turnstile.pre_commit': ['codevalidator = turnstile.checks.pre_commit.codevalidator']}
 )
