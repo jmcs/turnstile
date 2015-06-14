@@ -11,7 +11,7 @@ import requests
 
 import turnstile.version as version
 
-PYPI_URL = 'https://pypi.python.org/pypi/zalando-turnstile/json'
+PYPI_URL = 'https://pypi.python.org/pypi/zalando-core/json'
 
 
 def get_pypi_version():
@@ -30,7 +30,9 @@ def upgrade_turnstile():
     """
     Use pip to upgrade turnstile
     """
-    pip.main(['install', '--upgrade', 'zalando-turnstile'])
+    # TODO handle extensions updates
+
+    pip.main(['install', '--upgrade', 'zalando-core'])
 
 
 @click.command('upgrade')
