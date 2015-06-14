@@ -58,6 +58,13 @@ Other subcommands
 Turnstile has several useful subcommands available. You can check them in the
 `subcommand list <docs/user/subcommands.md>`_.
 
+Adding subcommands
+------------------
+Turnstile looks for command extensions in 'turnstile.commands' entry points.
+
+To make a new subcommand create a 'click <http://click.pocoo.org>`_ command named `cmd` and add the module with command
+to your setup.py entry points in the 'turnstile.commands' group.
+
 Known Issues
 ------------
 When you run turnstile in a new repository (i.e. a repository without commits) the hooks will not see any file changes.
