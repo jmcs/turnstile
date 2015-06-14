@@ -52,5 +52,11 @@ setup(
     long_description='Turnstile - Zalando Local Git Hooks',
     entry_points={'console_scripts': ['turnstile = turnstile.manager:manager',
                                       'zalando-turnstile-commit-msg = turnstile.commit_msg:commit_msg',
-                                      'zalando-turnstile-pre-commit = turnstile.pre_commit:pre_commit']},
+                                      'zalando-turnstile-pre-commit = turnstile.pre_commit:pre_commit'],
+                  'turnstile.commands': ['codevalidator = turnstile.manager_subcommands.codevalidator',
+                                         'config = turnstile.manager_subcommands.config',
+                                         'install = turnstile.manager_subcommands.install',
+                                         'remove = turnstile.manager_subcommands.remove',
+                                         'upgrade = turnstile.manager_subcommands.upgrade',
+                                         'version = turnstile.manager_subcommands.version'],}
 )

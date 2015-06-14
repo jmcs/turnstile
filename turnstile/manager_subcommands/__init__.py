@@ -1,21 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
+"""
+Copyright 2015 Zalando SE
 
-import importlib
-import pkgutil
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the
+License. You may obtain a copy of the License at
 
-# Fetch click commands from submodules from git_hooks.manager_subcommands
-# The click command functions should be named cmd
+http://www.apache.org/licenses/LICENSE-2.0
 
-commands = []
-for loader, module_name, is_pkg in pkgutil.walk_packages(__path__):
-    name = '.' + module_name
-    # import submodule git_hooks.manager_subcommands.*
-    sub_module = importlib.import_module(name, 'turnstile.manager_subcommands')
-    try:
-        commands.append(sub_module.cmd)
-    except AttributeError:
-        print('Error loading', module_name)
-        pass
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific
+language governing permissions and limitations under the License.
+"""
