@@ -59,7 +59,7 @@ setup(
                                          'version = turnstile.manager_subcommands.version'],
                   'turnstile.commit_msg': ['branch_pattern = turnstile.checks.commit_msg.branch_pattern',
                                            'branch_release = turnstile.checks.commit_msg.branch_release',
-                                           'branch_type = turnstile.checks.commit_msg.branch:type',
+                                           'branch_type = turnstile.checks.commit_msg.branch_type',
                                            'protect_master = turnstile.checks.commit_msg.protect_master',
                                            'specification = turnstile.checks.commit_msg.specification']}
 )

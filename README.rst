@@ -56,9 +56,9 @@ Turnstile has several useful subcommands available. You can check them in the
 
 Adding subcommands
 ------------------
-Turnstile looks for command extensions in 'turnstile.commands' entry points.
+Turnstile looks for command extensions in `turnstile.commands` entry points.
 
-To make a new subcommand create a 'click <http://click.pocoo.org>`_ command named `cmd` and add the module with command
+To make a new subcommand create a `click <http://click.pocoo.org>`_ command named `cmd` and add the module with command
 to your setup.py entry points in the 'turnstile.commands' group.
 
 Known Issues
