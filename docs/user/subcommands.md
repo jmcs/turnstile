@@ -14,7 +14,6 @@ Subcommand list
 
 | Subcommand                                    | Description                                                             |
 |-----------------------------------------------|-------------------------------------------------------------------------|
-| [codevalidator](subcommands/codevalidator.md) | Executes the codevalidator check and optionally tries to fix the files. |
 | config                                        | Set turnstile configuration                                             |
 | install                                       | Installs git hooks in repository                                        |
 | remove                                        | Removes git hooks from repository                                       |

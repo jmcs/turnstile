@@ -6,12 +6,12 @@
   :target: https://coveralls.io/r/zalando/turnstile?branch=master
   :alt: Code Coverage
 
-.. image:: https://pypip.in/version/turnstile/badge.svg
-   :target: https://pypi.python.org/pypi/turnstile
+.. image:: https://pypip.in/version/turnstile-core/badge.svg
+   :target: https://pypi.python.org/pypi/turnstile-core
    :alt: Latest Version
 
 .. image:: https://pypip.in/status/turnstile/badge.svg
-   :target: https://pypi.python.org/pypi/turnstile
+   :target: https://pypi.python.org/pypi/turnstile-core
    :alt: Development Status
 
 .. image:: https://img.shields.io/pypi/l/turnstile.svg
