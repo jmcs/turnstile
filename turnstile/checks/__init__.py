@@ -55,8 +55,6 @@ def get_checks(hook_name):
 
     :param hook_name: Which hook is fetching the checks
     :type hook_name: str
-    :param checklist: List of check names
-    :type checklist: [str]
     :rtype: [str, FunctionType]
     """
     group_name = 'turnstile.{}'.format(hook_name)
