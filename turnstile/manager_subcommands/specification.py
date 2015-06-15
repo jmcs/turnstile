@@ -35,7 +35,6 @@ def cmd(verbose, revision_range):
     When using the verbose mode merge commits are printed otherwise they are simply ignored
     """
     # TODO: Load options
-    # TODO: unit tests
     # TODO: documentation
 
     repository = git.Repo()
