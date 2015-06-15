@@ -57,6 +57,7 @@ setup(
                   'turnstile.commands': ['config = turnstile.manager_subcommands.config',
                                          'install = turnstile.manager_subcommands.install',
                                          'remove = turnstile.manager_subcommands.remove',
+                                         'specification = turnstile.manager_subcommands.specification',
                                          'upgrade = turnstile.manager_subcommands.upgrade',
                                          'version = turnstile.manager_subcommands.version'],
                   'turnstile.commit_msg': ['branch_pattern = turnstile.checks.commit_msg.branch_pattern',
