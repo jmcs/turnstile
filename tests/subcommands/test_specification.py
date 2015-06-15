@@ -4,8 +4,11 @@
 from click.testing import CliRunner
 import git
 import pytest
+from os.path import abspath, dirname
 
 from turnstile.manager_subcommands.specification import cmd
+
+TEST_FOLDER = dirname(abspath(__file__))
 
 
 class FakeCommit(object):
@@ -24,10 +27,12 @@ class FakeRepo(object):
         '020': (['016'], 'Other Bad Commit'),
         '0f0': (['016'], 'https://www.example.com/issue2 Good Commit'),
         '0f2': (['0f0'], 'https://www.example.com/issue3 Good Commit'),
+        '0f4': (['0f2'], 'ftp://www.example.com/issue4 FTP Commit'),
+        '0f5': (['0f4'], 'ftp://www.example.com/issue5 FTP Commit'),
     }
 
     def __init__(self, dir=None):
-        pass
+        self.working_dir = TEST_FOLDER
 
     def iter_commits(self, revision):
         # TODO MIN..MAX
@@ -47,6 +52,7 @@ class FakeRepo(object):
 @pytest.fixture
 def fake_git(monkeypatch):
     monkeypatch.setattr(git, 'Repo', FakeRepo)
+    return FakeRepo
 
 
 def test_specification(fake_git):
@@ -54,14 +60,14 @@ def test_specification(fake_git):
 
     result1 = runner.invoke(cmd, ['0ff'])
     assert '016 Merge' not in result1.output
-    assert result1.exit_code == 2
+    assert result1.exit_code == 4
 
     result2 = runner.invoke(cmd, ['0ff', '-v'])
     assert '016 Merge' in result2.output
-    assert result2.exit_code == 2
+    assert result2.exit_code == 4
 
-    result3 = runner.invoke(cmd, ['020..0ff'])
+    result3 = runner.invoke(cmd, ['020..0f2'])
     assert result3.exit_code == 1
 
-    result4 = runner.invoke(cmd, ['021..0ff'])
+    result4 = runner.invoke(cmd, ['021..0f2'])
     assert result4.exit_code == 0

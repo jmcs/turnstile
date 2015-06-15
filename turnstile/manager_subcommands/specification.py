@@ -20,6 +20,7 @@ import click
 import git
 import sys
 
+import turnstile.common.config as config
 import turnstile.models.specifications as specifications
 
 
@@ -34,12 +35,14 @@ def cmd(verbose, revision_range):
 
     When using the verbose mode merge commits are printed otherwise they are simply ignored
     """
-    # TODO: Load options
     # TODO: documentation
 
     repository = git.Repo()
     commits = list(repository.iter_commits(revision_range))
     invalid = 0
+    options = config.load_repository_configuration(repository.working_dir)
+    allowed_schemes = options.get('allowed_schemes', ['https', 'offline'])
+
     for commit in commits:
         is_a_merge = len(commit.parents) > 1
         if is_a_merge and not verbose:
@@ -47,19 +50,21 @@ def cmd(verbose, revision_range):
         short_hash = commit.hexsha[:7]
         first_line = commit.message.splitlines()[0]
         specification = specifications.get_specification(commit.message)
-        if specification.valid:
+        if specification.valid and specification.uri.scheme in allowed_schemes:
             click.secho(' ✔ ', bg='green', fg='white', nl=False)
         elif is_a_merge:
-            click.secho('   ', fg='yellow', nl=False, bold=True)
+            click.secho('   ', fg='yellow', nl=False)
         else:
             invalid += 1
             click.secho(' ✘ ', bg='red', fg='white', nl=False)
         click.secho(' {} '.format(short_hash), fg='white' if is_a_merge else 'yellow', nl=False, dim=is_a_merge)
         click.secho(first_line, dim=is_a_merge)
+
     if invalid:
         if invalid == 1:
             message = '1 commit has invalid specification.'
         else:
             message = '{n} commits have invalid specifications.'.format(n=invalid)
         click.secho(message, fg='red', bold=True)
+
     sys.exit(invalid)
