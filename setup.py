@@ -15,7 +15,9 @@ class PyTest(TestCommand):
     def initialize_options(self):
         TestCommand.initialize_options(self)
         self.cov = None
-        self.pytest_args = ['--cov', 'turnstile', '--cov-report', 'term-missing', '--doctest-modules', 'turnstile']
+        self.pytest_args = ['--cov', 'turnstile',
+                            '--cov-report', 'term-missing',
+                            '--doctest-modules', 'turnstile', 'tests']
 
     def finalize_options(self):
         TestCommand.finalize_options(self)

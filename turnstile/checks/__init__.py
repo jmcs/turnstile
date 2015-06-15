@@ -76,7 +76,7 @@ def get_checks(hook_name):
     for entry_point in pkg_resources.iter_entry_points(group_name):
         try:
             module = entry_point.load()
-        except ImportError:
+        except ImportError:  # pragma: no cover
             logger.error('%s not found', entry_point.name)
             continue
         check = module.check  # type: FunctionType
