@@ -4,3 +4,4 @@ zalando_turnstile.egg-info
 build
 *.pyc
 *.egg
+turnstile_core.egg-info
