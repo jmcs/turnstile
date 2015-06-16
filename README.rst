@@ -58,7 +58,7 @@ to your setup.py entry points in the 'turnstile.commands' group.
 
 More information
 -----------------
-To learn check the `Turnsile Documentation <rtd_>`_.
+To learn more check `Turnsile's Documentation <rtd_>`_.
 
 License
 -------
