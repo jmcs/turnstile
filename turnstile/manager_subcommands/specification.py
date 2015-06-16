@@ -29,13 +29,12 @@ import turnstile.models.specifications as specifications
 @click.argument('revision_range', required=False)
 def cmd(verbose, revision_range):
     """
-    Verifies the specifications of a range of commits.
+    Verifies if the commit messages in a range of revisions have valid specifications.
 
     This command takes the same revision ranges as ``git log`` to specify which commits are processed
 
     When using the verbose mode merge commits are printed otherwise they are simply ignored
     """
-    # TODO: documentation
 
     repository = git.get_repository()
     if not repository:
