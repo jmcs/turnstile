@@ -18,14 +18,6 @@ Contents:
     dev/index
     user/index
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 .. _pypi/turnstile-core: https://pypi.python.org/pypi/turnstile-core
 .. _zalando/turnstile: https://github.com/zalando/turnstile
 
