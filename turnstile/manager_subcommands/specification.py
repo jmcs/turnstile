@@ -17,9 +17,9 @@ language governing permissions and limitations under the License.
 from __future__ import print_function
 
 import click
-import git
 import sys
 
+import turnstile.common.git as git
 import turnstile.common.config as config
 import turnstile.models.specifications as specifications
 
@@ -37,7 +37,10 @@ def cmd(verbose, revision_range):
     """
     # TODO: documentation
 
-    repository = git.Repo()
+    repository = git.get_repository()
+    if not repository:
+        click.secho('This command must be executed inside a repository', fg='red', bold=True)
+        raise click.Abort
     commits = list(repository.iter_commits(revision_range))
     invalid = 0
     options = config.load_repository_configuration(repository.working_dir)
