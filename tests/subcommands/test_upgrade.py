@@ -35,7 +35,7 @@ class FakeDistribution:
 
 
 @pytest.fixture
-def fake_pypi(monkeypatch: '_pytest.monkeypatch.monkeypatch'):
+def fake_pypi(monkeypatch):
     def fake_get(url:str):
         if url == "https://pypi.python.org/pypi/package_1/json":
             return FakeResponse(200, '{"info": {"version": "1.0"}}')
