@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from turnstile.models.specifications import get_specification
 
 
