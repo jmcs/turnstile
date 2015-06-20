@@ -45,7 +45,7 @@ class FakeRepo(object):
             commit_id = ('{:03x}'.format(i))
             if commit_id in self.commits:
                 parents, message = self.commits.get('{:03x}'.format(i))
-                print parents
+                print(parents)
                 yield FakeCommit(commit_id, parents, message)
 
 
