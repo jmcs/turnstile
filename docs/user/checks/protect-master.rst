@@ -1,3 +1,5 @@
+.. _protect_master_check:
+
 Protect Master Check
 --------------------
 

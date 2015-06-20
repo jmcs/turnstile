@@ -14,16 +14,26 @@ Unless required by applicable law or agreed to in writing, software distributed 
 language governing permissions and limitations under the License.
 """
 
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 
-import click
+from git.exc import InvalidGitRepositoryError
+import git
+import os
 
-import turnstile.version as version
 
-
-@click.command('version')
-def cmd():
+def get_repository(directory=None):
     """
-    Print Turnstile version
+    git.Repo() fails if it's not in the root of the repository so wee need to try the parents to see if we are inside
+    a repository
+
+    :rtype: Optional[git.Repo]
     """
-    print('Zalando Turnstile - ', version.version)
+    directory = directory or os.getcwd()
+    repo = None
+    while repo is None and directory != '/':
+        print(directory)
+        try:
+            repo = git.Repo(directory)
+        except InvalidGitRepositoryError:
+            directory = os.path.dirname(directory)
+    return repo
