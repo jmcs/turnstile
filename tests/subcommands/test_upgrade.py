@@ -36,7 +36,7 @@ class FakeDistribution:
 
 @pytest.fixture
 def fake_pypi(monkeypatch):
-    def fake_get(url:str):
+    def fake_get(url):
         if url == "https://pypi.python.org/pypi/package_1/json":
             return FakeResponse(200, '{"info": {"version": "1.0"}}')
         elif url == "https://pypi.python.org/pypi/package_2/json":
@@ -51,7 +51,7 @@ def fake_pypi(monkeypatch):
 
 
 @pytest.fixture
-def fake_pkg_resources(monkeypatch: '_pytest.monkeypatch.monkeypatch'):
+def fake_pkg_resources(monkeypatch):
     def fake_iter_entry_points(group):
         if group == 'turnstile.commands':
             return [FakeEntrypoint('1.0', 'package_1')]
