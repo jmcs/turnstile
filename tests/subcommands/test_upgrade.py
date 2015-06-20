@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from click.testing import CliRunner
 from os.path import abspath, dirname
 import pkg_resources
 import pytest
 import requests
 import json
 
-from turnstile.manager_subcommands.upgrade import get_pypi_version, get_packages, upgrade_packages
+from turnstile.manager_subcommands.upgrade import get_pypi_version, get_packages, upgrade_packages, cmd
 
 TEST_FOLDER = dirname(abspath(__file__))
 
 
 class FakeResponse:
-    def __init__(self, status_code: int, text: str):
+    def __init__(self, status_code, text):
         self.status_code = status_code
         self.text = text
         self.ok = status_code == 200
@@ -35,9 +36,15 @@ class FakeDistribution:
 
 @pytest.fixture
 def fake_pypi(monkeypatch: '_pytest.monkeypatch.monkeypatch'):
-    def fake_get(url: str, params: dict=None):
-        if url == "https://pypi.python.org/pypi/turnstile-core-1.0/json":
+    def fake_get(url:str):
+        if url == "https://pypi.python.org/pypi/package_1/json":
             return FakeResponse(200, '{"info": {"version": "1.0"}}')
+        elif url == "https://pypi.python.org/pypi/package_2/json":
+            return FakeResponse(200, '{"info": {"version": "2.0"}}')
+        elif url == "https://pypi.python.org/pypi/package_3/json":
+            return FakeResponse(200, '{"info": {"version": "2.0"}}')
+        elif url == "https://pypi.python.org/pypi/package_4/json":
+            return FakeResponse(200, '{"info": {"version": "1.4"}}')
         return url
 
     monkeypatch.setattr(requests, 'get', fake_get)
@@ -57,7 +64,7 @@ def fake_pkg_resources(monkeypatch: '_pytest.monkeypatch.monkeypatch'):
 
 
 def test_get_pypi_version(fake_pypi):
-    version = get_pypi_version('turnstile-core-1.0')
+    version = get_pypi_version('package_1')
     assert version == "1.0"
     assert version.version == [1, 0]
 
@@ -75,3 +82,38 @@ def test_get_packages(fake_pkg_resources):
     assert ('1.1', 'package_2') in packages
     assert ('1.4', 'package_3') in packages
     assert ('1.4', 'package_4') in packages
+
+def test_specification(mocker, fake_pkg_resources, fake_pypi):
+    pip_main = mocker.patch('pip.main')
+    runner = CliRunner()
+
+    result1 = runner.invoke(cmd, input='y\n')
+    assert 'package_2' in result1.output
+    assert 'package_3' in result1.output
+    assert 'package_1' not in result1.output
+    assert 'package_4' not in result1.output
+    pip_args = pip_main.call_args[0][0]
+    assert 'package_2' in pip_args
+    assert 'package_3' in pip_args
+    assert 'package_1' not in pip_args
+    assert 'package_4' not in pip_args
+    pip_main.reset_mock()
+
+    result2 = runner.invoke(cmd, ['-v'], input='y\n')
+    assert 'package_2' in result2.output
+    assert 'package_3' in result2.output
+    assert 'package_1' in result2.output
+    assert 'package_4' in result2.output
+    pip_args = pip_main.call_args[0][0]
+    assert 'package_2' in pip_args
+    assert 'package_3' in pip_args
+    assert 'package_1' not in pip_args
+    assert 'package_4' not in pip_args
+    pip_main.reset_mock()
+
+    pkg_resources.iter_entry_points = lambda x: []
+
+    result3 = runner.invoke(cmd, input='y\n')
+    assert result3.output == 'Turnstile is already updated.\n'
+    assert not pip_main.called
+
