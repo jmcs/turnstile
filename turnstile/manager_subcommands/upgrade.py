@@ -32,7 +32,7 @@ def get_pypi_version(package):
     """
     Gets the latest version from PYPI
 
-    :rtype: distutils.version.LooseVersion | None
+    :rtype: distutils.version.LooseVersion
     """
     pypi_data = requests.get(PYPI_URL.format(package=package)).json()
     project_info = pypi_data.get('info', dict())

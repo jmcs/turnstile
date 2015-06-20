@@ -6,12 +6,10 @@ import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
-
 from turnstile.version import version
 
 
 class PyTest(TestCommand):
-
     def initialize_options(self):
         TestCommand.initialize_options(self)
         self.cov = None
@@ -26,6 +24,7 @@ class PyTest(TestCommand):
 
     def run_tests(self):
         import pytest
+
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
@@ -39,7 +38,7 @@ setup(
     url='https://github.com/zalando/turnstile',
     license='Apache License Version 2.0',
     install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'rfc3986', 'MapGitConfig', 'requests', 'pip'],
-    tests_require=['pytest-cov', 'pytest'],
+    tests_require=['pytest', 'pytest-mock', 'pytest-cov'],
     cmdclass={'test': PyTest},
     classifiers=[
         'Programming Language :: Python',
