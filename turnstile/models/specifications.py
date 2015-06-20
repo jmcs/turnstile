@@ -49,14 +49,6 @@ def get_specification(commit_message):
     >>> spec.valid
     False
 
-    >>> spec = get_specification('http://spec.url')
-    >>> spec.scheme
-    u'http'
-
-    >>> spec = get_specification('https://spec.url')
-    >>> spec.scheme
-    u'https'
-
     :type commit_message:str
     :type default_specification_format:str
     :return: BaseSpecification
