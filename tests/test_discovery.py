@@ -5,7 +5,7 @@ from turnstile.checks import get_checks
 from turnstile.manager import get_commands
 
 CORE_COMMIT_MSG_CHECKS = ['branch_pattern', 'branch_release', 'branch_type', 'protect_master', 'specification']
-CORE_SUBCOMMANDS = ['config', 'install', 'remove', 'upgrade', 'version']
+CORE_SUBCOMMANDS = ['config', 'install', 'remove', 'specification', 'upgrade', 'version']
 
 
 def test_checks():
