@@ -24,7 +24,7 @@ Installation
 ------------
 You can install turnstile using pip:
 
-    # pip install zalando-turnstile
+    # pip install turnstile-core
 
 Alternative you can install it using setup.py
 
