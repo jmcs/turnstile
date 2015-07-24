@@ -24,11 +24,15 @@ Installation
 ------------
 You can install turnstile using pip:
 
-    # pip install turnstile-core
+.. code-block:: bash
+
+    $ pip install turnstile-core
 
 Alternative you can install it using setup.py
 
-    # setup.py install
+.. code-block:: bash
+
+    $ setup.py install
 
 Adding and removing turnstile from a repository
 -----------------------------------------------
