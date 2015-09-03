@@ -48,8 +48,8 @@ class Specification(object):
         >>> Specification('#32', {'uri', 'github'}, ['https', 'offline']).valid
         True
         """
-        validators = {'jira': self.validate_jira,
-                      'github': self.validate_github,
+        validators = {'github': self.validate_github,
+                      'jira': self.validate_jira,
                       'uri': self.validate_uri}
 
         return any(validators[format]() for format in self.allowed_formats)
