@@ -31,7 +31,6 @@ class Specification(object):
 
         # For URIs
         self.allowed_schemes = allowed_uri_schemes or ['https', 'offline']
-        self.uri = rfc3986.uri_reference(identifier)  # todo remove this after specification also gets the schemes
 
     @property
     def valid(self):
@@ -49,8 +48,9 @@ class Specification(object):
         >>> Specification('#32', {'uri', 'github'}, ['https', 'offline']).valid
         True
         """
-        validators = {'uri': self.validate_uri,
-                      'github': self.validate_github}
+        validators = {'jira': self.validate_jira,
+                      'github': self.validate_github,
+                      'uri': self.validate_uri}
 
         return any(validators[format]() for format in self.allowed_formats)
 
@@ -86,6 +86,29 @@ class Specification(object):
         """
 
         regex = r'^((\w*|\w*/\w*)#|GH-)\d+$'
+        return bool(re.match(regex, self.identifier))
+
+    def validate_jira(self):
+        """
+        :rtype: bool
+
+        >>> Specification('CD-42', {'jira'}, []).validate_jira()
+        True
+
+        >>> Specification('PROJECT-42', {'jira'}, []).validate_jira()
+        True
+
+        >>> Specification('#PROJECT-42', {'jira'}, []).validate_jira()
+        True
+
+        >>> Specification('#42', {'jira'}, []).validate_jira()
+        False
+
+        >>> Specification('invalid', {'jira'}, []).validate_jira()
+        False
+        """
+
+        regex = r'#?(?P<id>[A-Z]+-[0-9]+)'
         return bool(re.match(regex, self.identifier))
 
     def __str__(self):

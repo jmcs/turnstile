@@ -35,7 +35,6 @@ def check(user_configuration, repository_configuration, commit_message):
     logger.debug("Allowed schemes: %s", allowed_schemes)
 
     result = checks.CheckResult()
-    # TODO make configurable
     specification = specifications.get_specification(commit_message.message, allowed_formats, allowed_schemes)
     is_valid_uri = specification.valid
 
@@ -44,7 +43,6 @@ def check(user_configuration, repository_configuration, commit_message):
 
     result.successful = is_valid_uri
     if not is_valid_uri:
-        # TODO add details like allowed formats and schemes
         result.add_detail('{spec} is not a valid specification.'.format(spec=specification))
 
     return result
