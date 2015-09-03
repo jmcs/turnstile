@@ -15,42 +15,118 @@ language governing permissions and limitations under the License.
 """
 
 import rfc3986
+import re
 
 
 class Specification(object):
+    def __init__(self, identifier, allowed_formats, allowed_uri_schemes):
+        """
 
-    def __init__(self, uri):
-        self.uri = rfc3986.uri_reference(uri)
-        self.scheme = self.uri.scheme
+        :type identifier: str
+        :type allowed_formats: Iterator
+        :return:
+        """
+        self.identifier = identifier
+        self.allowed_formats = allowed_formats
+
+        # For URIs
+        self.allowed_schemes = allowed_uri_schemes or ['https', 'offline']
 
     @property
     def valid(self):
         """
-        Specification URIs have to be valid, have a scheme and be absolute
-        >>> Specification('https://short.url/spec').valid
+        Goes through all allowed format validators and checks if the identifier is valid in at least one of them
+
+        >>> Specification('https://short.url/spec', {'uri'}, ['https', 'offline']).valid
         True
-        >>> Specification('https://10[0]0').valid
+        >>> Specification('https://10[0]0', {'uri'}, ['https', 'offline']).valid
         False
-        >>> Specification('noscheme').valid
+        >>> Specification('noscheme', {'uri'}, ['https', 'offline']).valid
+        False
+        >>> Specification('#32', {'uri'}, ['https', 'offline']).valid
+        False
+        >>> Specification('#32', {'uri', 'github'}, ['https', 'offline']).valid
+        True
+        """
+        validators = {'github': self.validate_github,
+                      'jira': self.validate_jira,
+                      'uri': self.validate_uri}
+
+        return any(validators[format]() for format in self.allowed_formats)
+
+    def validate_uri(self):
+        """
+        Specification URIs have to be valid, have a scheme and be absolute
+        :rtype: bool
+        """
+        uri = rfc3986.uri_reference(self.identifier)
+        valid_uri_scheme = uri.scheme in self.allowed_schemes
+        return uri.is_valid() and valid_uri_scheme and uri.is_absolute()
+
+    def validate_github(self):
+        """
+        https://help.github.com/articles/writing-on-github/#references
+
+        :rtype: bool
+
+        >>> Specification('#42', {'github'}, []).validate_github()
+        True
+
+        >>> Specification('zalando/turnstile#42', {'github'}, []).validate_github()
+        True
+
+        >>> Specification('GH-42', {'github'}, []).validate_github()
+        True
+
+        >>> Specification('zalando#42', {'github'}, []).validate_github()
+        True
+
+        >>> Specification('32', {'github'}, []).validate_github()
         False
         """
-        return bool(self.uri.is_valid() and self.scheme and self.uri.is_absolute())
+
+        regex = r'^((\w*|\w*/\w*)#|GH-)\d+$'
+        return bool(re.match(regex, self.identifier))
+
+    def validate_jira(self):
+        """
+        :rtype: bool
+
+        >>> Specification('CD-42', {'jira'}, []).validate_jira()
+        True
+
+        >>> Specification('PROJECT-42', {'jira'}, []).validate_jira()
+        True
+
+        >>> Specification('#PROJECT-42', {'jira'}, []).validate_jira()
+        True
+
+        >>> Specification('#42', {'jira'}, []).validate_jira()
+        False
+
+        >>> Specification('invalid', {'jira'}, []).validate_jira()
+        False
+        """
+
+        regex = r'#?(?P<id>[A-Z]+-[0-9]+)'
+        return bool(re.match(regex, self.identifier))
 
     def __str__(self):
-        return self.uri.unsplit()
+        return self.identifier
 
 
-def get_specification(commit_message):
+def get_specification(commit_message, allowed_formats, allowed_uri_schemes):
     """
     Extracts the specification URI from the commit_message and creates the appropriate specification instance based on
     the URI scheme. If scheme is missing from the URI the default_specification_format will be used.
 
-    >>> spec = get_specification('something')
+    >>> spec = get_specification('something', {'uri'}, {'https'})
     >>> spec.valid
     False
 
     :type commit_message:str
     :type default_specification_format:str
+    :type allowed_uri_schemes: List[str]
     :return: BaseSpecification
     """
     try:
@@ -59,5 +135,5 @@ def get_specification(commit_message):
         # If there is only one word (the spec) split will fail
         specification_str = commit_message
 
-    specification = Specification(specification_str)
+    specification = Specification(specification_str, allowed_formats, allowed_uri_schemes)
     return specification

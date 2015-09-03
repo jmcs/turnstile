@@ -35,7 +35,6 @@ class FakeRepo(object):
         self.working_dir = TEST_FOLDER
 
     def iter_commits(self, revision):
-        # TODO MIN..MAX
         if '..' in revision:
             min, max = (int(rev, 16) for rev in revision.split('..'))
         else:

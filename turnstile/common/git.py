@@ -31,7 +31,6 @@ def get_repository(directory=None):
     directory = directory or os.getcwd()
     repo = None
     while repo is None and directory != '/':
-        print(directory)
         try:
             repo = git.Repo(directory)
         except InvalidGitRepositoryError:
