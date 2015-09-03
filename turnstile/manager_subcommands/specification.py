@@ -44,6 +44,7 @@ def cmd(verbose, revision_range):
     invalid = 0
     options = config.load_repository_configuration(repository.working_dir)
     allowed_schemes = options.get('allowed_schemes', ['https', 'offline'])
+    allowed_formats = options.get('allowed_formats', {'uri'})
 
     for commit in commits:
         is_a_merge = len(commit.parents) > 1
@@ -52,7 +53,7 @@ def cmd(verbose, revision_range):
         short_hash = commit.hexsha[:7]
         first_line = commit.message.splitlines()[0]
         # TODO make configurable
-        specification = specifications.get_specification(commit.message, {'uri'}, allowed_schemes)
+        specification = specifications.get_specification(commit.message, allowed_formats, allowed_schemes)
         if specification.valid:
             click.secho(' ✔ ', bg='green', fg='white', nl=False)
         elif is_a_merge:

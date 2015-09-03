@@ -31,11 +31,12 @@ def check(user_configuration, repository_configuration, commit_message):
 
     check_options = repository_configuration.get('specification', {})
     allowed_schemes = check_options.get('allowed_schemes', ['https', 'offline'])
+    allowed_formats = check_options.get('allowed_formats', {'uri'})
     logger.debug("Allowed schemes: %s", allowed_schemes)
 
     result = checks.CheckResult()
     # TODO make configurable
-    specification = specifications.get_specification(commit_message.message, {'uri'}, allowed_schemes)
+    specification = specifications.get_specification(commit_message.message, allowed_formats, allowed_schemes)
     is_valid_uri = specification.valid
 
     logger.debug('Specification: %s', specification)
