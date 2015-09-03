@@ -3,6 +3,7 @@
 
 import turnstile.checks as checks
 import turnstile.common.output as output
+import turnstile.models.specifications as specifications
 
 
 @checks.Check('Specification is valid')
@@ -33,7 +34,7 @@ def check(user_configuration, repository_configuration, commit_message):
     logger.debug("Allowed schemes: %s", allowed_schemes)
 
     result = checks.CheckResult()
-    specification = commit_message.specification
+    specification = specifications.get_specification(commit_message.message)
     is_valid_uri = specification.valid
     is_valid_scheme = specification.uri.scheme in allowed_schemes
 

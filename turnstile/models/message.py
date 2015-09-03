@@ -14,8 +14,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 language governing permissions and limitations under the License.
 """
 
-import turnstile.models.specifications as specfications
-
 
 class CommitMessage(object):
     """
@@ -35,7 +33,6 @@ class CommitMessage(object):
         """
         self.branch = branch
         self.message = message.strip()
-        self.specification = specfications.get_specification(message)
 
     def __str__(self):
         return self.message
