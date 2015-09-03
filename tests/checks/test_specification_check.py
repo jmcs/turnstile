@@ -16,7 +16,7 @@ def test_check():
     commit_2 = message.CommitMessage('something', 'invalid-1')
     result_2 = check(None, {}, commit_2)
     assert not result_2.successful
-    assert result_2.details == ['invalid-1 is not a valid specification URI.']
+    assert result_2.details == ['invalid-1 is not a valid specification.']
 
     # Merge messages are ignored
     with pytest.raises(CheckIgnore):
@@ -26,7 +26,7 @@ def test_check():
     commit_4 = message.CommitMessage('something', 'ftp://example.com/spec')
     result_4 = check(None, {'specification': {'allowed_schemes': ['https']}}, commit_4)
     assert not result_4.successful
-    assert result_4.details == ['ftp is not allowed. Allowed schemes are: https']
+    assert result_4.details == ['ftp://example.com/spec is not a valid specification.']
 
     commit_5 = message.CommitMessage('something', 'ftp://example.com/spec')
     result_5 = check(None, {'specification': {'allowed_schemes': ['https', 'ftp']}}, commit_5)

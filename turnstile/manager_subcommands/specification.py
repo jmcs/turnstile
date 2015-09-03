@@ -51,8 +51,9 @@ def cmd(verbose, revision_range):
             continue
         short_hash = commit.hexsha[:7]
         first_line = commit.message.splitlines()[0]
-        specification = specifications.get_specification(commit.message)
-        if specification.valid and specification.uri.scheme in allowed_schemes:
+        # TODO make configurable
+        specification = specifications.get_specification(commit.message, {'uri'}, allowed_schemes)
+        if specification.valid:
             click.secho(' ✔ ', bg='green', fg='white', nl=False)
         elif is_a_merge:
             click.secho('   ', fg='yellow', nl=False)
