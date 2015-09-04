@@ -37,8 +37,9 @@ setup(
     author='Zalando SE',
     url='https://github.com/zalando/turnstile',
     license='Apache License Version 2.0',
-    install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'rfc3986', 'MapGitConfig', 'requests', 'pip'],
-    tests_require=['pytest-cov', 'pytest', 'pytest-mock',],
+    install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'rfc3986', 'MapGitConfig', 'requests', 'pip',
+                      'pyrsistent'],
+    tests_require=['pytest-cov', 'pytest', 'pytest-mock', ],
     cmdclass={'test': PyTest},
     classifiers=[
         'Programming Language :: Python',
