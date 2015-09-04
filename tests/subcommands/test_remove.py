@@ -21,6 +21,9 @@ class FakeNonExistingPath(object):
     def __div__(self, other):
         return self
 
+    def __truediv__(self, other):
+        return self
+
 
 class FakeRepo(object):
     def __init__(self, dir=None):
