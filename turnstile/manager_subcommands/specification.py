@@ -38,7 +38,7 @@ def cmd(verbose, revision_range):
 
     repository = git.get_repository()
     if not repository:
-        click.secho('This command must be executed inside a repository', fg='red', bold=True)
+        click.secho('This command must be executed inside a repository.', fg='red', bold=True)
         raise click.Abort
     commits = list(repository.iter_commits(revision_range))
     invalid = 0

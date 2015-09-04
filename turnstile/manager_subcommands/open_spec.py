@@ -17,7 +17,6 @@ language governing permissions and limitations under the License.
 from __future__ import print_function
 
 import click
-import sys
 import webbrowser
 
 import turnstile.common.config as config
@@ -68,7 +67,6 @@ def cmd(reference='HEAD'):
     if url:
         click.secho('Opening {}'.format(url))
         webbrowser.open(url)
-        sys.exit()
     else:
         click.secho("{} specifications aren't supported yet.".format(specification_format), fg='red', bold=True)
         raise click.Abort
