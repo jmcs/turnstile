@@ -17,6 +17,8 @@ language governing permissions and limitations under the License.
 import rfc3986
 import re
 
+import turnstile.common.github as github
+
 
 class Specification(object):
     def __init__(self, identifier, allowed_formats, allowed_uri_schemes):
@@ -96,9 +98,7 @@ class Specification(object):
         >>> Specification('32', {'github'}, []).validate_github()
         False
         """
-        # TODO Github common
-        regex = r'^((\w*|\w*/\w*)#|GH-)(?P<issue>\d+)$'
-        return bool(re.match(regex, self.identifier))
+        return bool(github.extract_issue_number(self.identifier))
 
     def validate_jira(self):
         """

@@ -17,17 +17,13 @@ language governing permissions and limitations under the License.
 from __future__ import print_function
 
 import click
-import re
 import sys
 import webbrowser
 
-import turnstile.common.git as git
 import turnstile.common.config as config
+import turnstile.common.git as git
+import turnstile.common.github as github
 import turnstile.models.specifications as specifications
-
-# TODO github commons
-GITHUB_REGEX = re.compile(r'^(https://github.com/|\w+@github\.com:)(?P<repository>\w+/\w+)\.git$')
-GITHUB_ISSUE_REGEX = re.compile(r'^((\w*|\w*/\w*)#|GH-)(?P<issue>\d+)$')
 
 
 @click.command('view')
@@ -59,10 +55,9 @@ def cmd(reference='HEAD'):
     elif specification_format == 'github':
         origin = repository.remote('origin')  # type: git.remote.Remote
         git_url = origin.config_reader.get('url')
-        match = GITHUB_REGEX.match(git_url)
-        if match:
-            repository = match.group('repository')
-            issue = GITHUB_ISSUE_REGEX.match(specification.identifier).group('issue')
+        repository = github.extract_repository_from_url(git_url)
+        if repository:
+            issue = github.extract_issue_number(specification.identifier)
             url = 'https://github.com/{repository}/issues/{issue}'.format(**locals())
         else:
             click.secho("{} is not a github repository.".format(git_url), fg='red', bold=True)
