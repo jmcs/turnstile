@@ -33,6 +33,21 @@ class Specification(object):
         self.allowed_schemes = allowed_uri_schemes or ['https', 'offline']
 
     @property
+    def format(self):
+        """
+        Checks the identifier against the allowed formats and returns the first that matches or None if none do.
+
+        :rtype: Optional(str)
+        """
+        validators = {'github': self.validate_github,
+                      'jira': self.validate_jira,
+                      'uri': self.validate_uri}
+
+        for format in self.allowed_formats:
+            if validators[format]():
+                return format
+
+    @property
     def valid(self):
         """
         Goes through all allowed format validators and checks if the identifier is valid in at least one of them
@@ -48,11 +63,8 @@ class Specification(object):
         >>> Specification('#32', {'uri', 'github'}, ['https', 'offline']).valid
         True
         """
-        validators = {'github': self.validate_github,
-                      'jira': self.validate_jira,
-                      'uri': self.validate_uri}
 
-        return any(validators[format]() for format in self.allowed_formats)
+        return bool(self.format)
 
     def validate_uri(self):
         """
@@ -84,8 +96,8 @@ class Specification(object):
         >>> Specification('32', {'github'}, []).validate_github()
         False
         """
-
-        regex = r'^((\w*|\w*/\w*)#|GH-)\d+$'
+        # TODO Github common
+        regex = r'^((\w*|\w*/\w*)#|GH-)(?P<issue>\d+)$'
         return bool(re.match(regex, self.identifier))
 
     def validate_jira(self):

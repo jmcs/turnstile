@@ -56,6 +56,7 @@ setup(
                                       'zalando-turnstile-pre-commit = turnstile.pre_commit:pre_commit'],
                   'turnstile.commands': ['config = turnstile.manager_subcommands.config',
                                          'install = turnstile.manager_subcommands.install',
+                                         'open-spec = turnstile.manager_subcommands.open_spec',
                                          'remove = turnstile.manager_subcommands.remove',
                                          'specification = turnstile.manager_subcommands.specification',
                                          'upgrade = turnstile.manager_subcommands.upgrade',
