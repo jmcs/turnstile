@@ -17,6 +17,8 @@ language governing permissions and limitations under the License.
 import rfc3986
 import re
 
+import turnstile.common.github as github
+
 
 class Specification(object):
     def __init__(self, identifier, allowed_formats, allowed_uri_schemes):
@@ -31,6 +33,21 @@ class Specification(object):
 
         # For URIs
         self.allowed_schemes = allowed_uri_schemes or ['https', 'offline']
+
+    @property
+    def format(self):
+        """
+        Checks the identifier against the allowed formats and returns the first that matches or None if none do.
+
+        :rtype: Optional(str)
+        """
+        validators = {'github': self.validate_github,
+                      'jira': self.validate_jira,
+                      'uri': self.validate_uri}
+
+        for format in self.allowed_formats:
+            if validators[format]():
+                return format
 
     @property
     def valid(self):
@@ -48,11 +65,8 @@ class Specification(object):
         >>> Specification('#32', {'uri', 'github'}, ['https', 'offline']).valid
         True
         """
-        validators = {'github': self.validate_github,
-                      'jira': self.validate_jira,
-                      'uri': self.validate_uri}
 
-        return any(validators[format]() for format in self.allowed_formats)
+        return bool(self.format)
 
     def validate_uri(self):
         """
@@ -84,9 +98,7 @@ class Specification(object):
         >>> Specification('32', {'github'}, []).validate_github()
         False
         """
-
-        regex = r'^((\w*|\w*/\w*)#|GH-)\d+$'
-        return bool(re.match(regex, self.identifier))
+        return bool(github.extract_issue_number(self.identifier))
 
     def validate_jira(self):
         """

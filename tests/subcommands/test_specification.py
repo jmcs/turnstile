@@ -12,7 +12,6 @@ TEST_FOLDER = dirname(abspath(__file__))
 
 
 class FakeCommit(object):
-
     def __init__(self, hexsha, parents, message):
         self.parents = parents
         self.hexsha = hexsha
@@ -52,6 +51,21 @@ class FakeRepo(object):
 def fake_git(monkeypatch):
     monkeypatch.setattr(git, 'Repo', FakeRepo)
     return FakeRepo
+
+
+@pytest.fixture()
+def fake_no_git(monkeypatch):
+    def raiser(*args):
+        raise git.InvalidGitRepositoryError
+
+    monkeypatch.setattr(git, 'Repo', raiser)
+
+
+def test_outside_git(fake_no_git):
+    runner = CliRunner()
+    result = runner.invoke(cmd, ['0ff'])
+    assert "This command must be executed inside a repository." in result.output
+    assert result.exit_code == 1
 
 
 def test_specification(fake_git):

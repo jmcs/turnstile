@@ -16,9 +16,11 @@ language governing permissions and limitations under the License.
 
 from __future__ import print_function, absolute_import
 
-from git.exc import InvalidGitRepositoryError
+from git import InvalidGitRepositoryError, BadName  # noqa
 import git
 import os
+
+assert BadName  # silence pyflakes
 
 
 def get_repository(directory=None):

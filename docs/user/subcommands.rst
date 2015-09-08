@@ -4,6 +4,7 @@ Turnstile Subcommands
 .. toctree::
    :maxdepth: 1
 
+   subcommands/open-spec
    subcommands/specification
    subcommands/upgrade
 
@@ -25,6 +26,8 @@ Subcommand list
 | config                       | Set turnstile configuration                                                        |
 +------------------------------+------------------------------------------------------------------------------------+
 | install                      | Installs git hooks in repository                                                   |
++------------------------------+------------------------------------------------------------------------------------+
+| :ref:`open_spec`             | Opens commit specification in browser                                              |
 +------------------------------+------------------------------------------------------------------------------------+
 | remove                       | Removes git hooks from repository                                                  |
 +------------------------------+------------------------------------------------------------------------------------+

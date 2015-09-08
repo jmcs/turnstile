@@ -42,8 +42,8 @@ def cmd(verbosity):
     try:
         repository = git.Repo()
     except git.InvalidGitRepositoryError:
-        logger.error('This command should be run inside a git repository')
-        exit(-1)
+        logger.error('This command must be executed inside a repository.')
+        raise click.Abort
 
     hook_dir = pathlib.Path(repository.git_dir) / 'hooks'
     pre_commit_path = hook_dir / 'pre-commit'

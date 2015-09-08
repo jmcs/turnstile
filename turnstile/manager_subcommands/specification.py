@@ -38,11 +38,11 @@ def cmd(verbose, revision_range):
 
     repository = git.get_repository()
     if not repository:
-        click.secho('This command must be executed inside a repository', fg='red', bold=True)
+        click.secho('This command must be executed inside a repository.', fg='red', bold=True)
         raise click.Abort
     commits = list(repository.iter_commits(revision_range))
     invalid = 0
-    options = config.load_repository_configuration(repository.working_dir)
+    options = config.load_repository_configuration(repository.working_dir).get('specification', {})
     allowed_schemes = options.get('allowed_schemes', ['https', 'offline'])
     allowed_formats = options.get('allowed_formats', {'uri'})
 
