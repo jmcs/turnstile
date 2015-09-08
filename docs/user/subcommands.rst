@@ -4,6 +4,7 @@ Turnstile Subcommands
 .. toctree::
    :maxdepth: 1
 
+   subcommands/open-spec
    subcommands/specification
    subcommands/upgrade
 
