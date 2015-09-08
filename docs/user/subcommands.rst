@@ -26,6 +26,8 @@ Subcommand list
 +------------------------------+------------------------------------------------------------------------------------+
 | install                      | Installs git hooks in repository                                                   |
 +------------------------------+------------------------------------------------------------------------------------+
+| :ref:`open_spec`             | Opens commit specification in browser                                              |
++------------------------------+------------------------------------------------------------------------------------+
 | remove                       | Removes git hooks from repository                                                  |
 +------------------------------+------------------------------------------------------------------------------------+
 | :ref:`specification_command` | Verifies if the commit messages in a range of revisions have valid specifications. |
