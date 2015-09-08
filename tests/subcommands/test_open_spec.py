@@ -34,6 +34,8 @@ class FakeRepo(object):
         self.working_dir = TEST_FOLDER
 
     def commit(self, reference):
+        if reference == 'invalid':
+            raise git.BadName
         message = self.commits[reference]
         return FakeCommit(reference, message)
 
@@ -120,4 +122,12 @@ def test_jira_not_implemented(fake_webbrowser, mocker):
     runner = CliRunner()
     result = runner.invoke(cmd, ['003'])
     assert "jira specifications aren't supported yet." in result.output
+    assert result.exit_code == 1
+
+
+def test_invalid_reference():
+    runner = CliRunner()
+
+    result = runner.invoke(cmd, ['invalid'])
+    assert "'invalid' is not a valid commit reference." in result.output
     assert result.exit_code == 1

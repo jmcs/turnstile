@@ -41,7 +41,12 @@ def cmd(reference='HEAD'):
     allowed_schemes = options.get('allowed_schemes', ['https', 'offline'])
     allowed_formats = options.get('allowed_formats', {'uri'})
 
-    commit = repository.commit(reference)
+    try:
+        commit = repository.commit(reference)
+    except git.BadName:
+        click.secho("'{reference}' is not a valid commit reference.".format(reference=reference), fg='red', bold=True)
+        raise click.Abort
+
     specification = specifications.get_specification(commit.message, allowed_formats, allowed_schemes)
     specification_format = specification.format
 
