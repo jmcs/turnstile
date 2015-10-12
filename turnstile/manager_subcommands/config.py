@@ -1,5 +1,5 @@
+from __future__ import print_function
 import click
-
 import turnstile.common.config as config
 
 
@@ -19,7 +19,7 @@ def cmd():
         print('  {i}. {level}'.format(**locals()))
     max_option = len(verbosity_levels)
     option_value = -1
-    while not (0 < option_value <= max_option):
+    while not 0 < option_value <= max_option:
         option_value = click.prompt('Please enter an option [1-{n}]'.format(n=max_option), default=2)
-    verbosity = verbosity_levels[option_value-1]
+    verbosity = verbosity_levels[option_value - 1]
     user_config.verbosity = verbosity
