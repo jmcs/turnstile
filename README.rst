@@ -51,7 +51,7 @@ Repository Configuration
 To use Turnstile you need to add a configuration file named ``.turnstile.yml`` to your repository.
 
 You can find an example configuration in `turnstile repository <turnstile.yml.example>`_ and you can read can learn more
-about the configuration options in the `documentation <rtd_>`_.
+about the configuration options in the `documentation <http://turnstile.readthedocs.org/en/latest/user/configuration.html>`_.
 
 Adding subcommands
 ------------------
