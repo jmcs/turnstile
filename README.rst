@@ -28,7 +28,7 @@ You can install turnstile using pip:
 
     $ pip install turnstile-core
 
-Alternative you can install it using setup.py
+Alternatively, you can install it using setup.py:
 
 .. code-block:: bash
 
@@ -36,9 +36,9 @@ Alternative you can install it using setup.py
 
 Adding and removing turnstile from a repository
 -----------------------------------------------
-To use turnstile in a repository you have to run ``turnstile install`` inside the repository.
+To use turnstile in a repository, run ``turnstile install`` inside the repository.
 
-To remove turnstile from a repository you have to run ``turnstile remove`` inside the repository.
+To remove turnstile from a repository, run ``turnstile remove`` inside the repository.
 
 Configuring turnstile
 ---------------------
@@ -46,23 +46,23 @@ You can configure the global hook behaviour by running ``turnstile config``.
 
 Currently you can only configure the hook verbosity.
 
-Repository Configuration
+Repository configuration
 ------------------------
-To use Turnstile you need to add a configuration file named ``.turnstile.yml`` to your repository.
+To use turnstile, you need to add a configuration file named ``.turnstile.yml`` to your repository.
 
-You can find an example configuration in `turnstile repository <turnstile.yml.example>`_ and you can read can learn more
-about the configuration options in the `documentation <http://turnstile.readthedocs.org/en/latest/user/configuration.html>`_.
+You can find an example configuration in `turnstile repository <turnstile.yml.example>`_ and can learn more
+about the configuration options in the `documentation <https://turnstile.readthedocs.org/en/latest/>`_.
 
 Adding subcommands
 ------------------
 Turnstile looks for command extensions in ``turnstile.commands`` entry points.
 
-To make a new subcommand create a `click <http://click.pocoo.org>`_ command named ``cmd`` and add the module with command
+To make a new subcommand, create a `click <http://click.pocoo.org>`_ command named ``cmd`` and add the module with command
 to your setup.py entry points in the 'turnstile.commands' group.
 
 More information
 -----------------
-To learn more check `Turnsile's Documentation <http://turnstile.readthedocs.org>`_.
+To learn more, check `turnstile's documentation <http://turnstile.readthedocs.org>`_.
 
 License
 -------
