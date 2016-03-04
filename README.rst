@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/isnok/turnstile.svg?branch=master
-   :target: https://travis-ci.org/isnok/turnstile
+.. image:: https://travis-ci.org/zalando/turnstile.svg?branch=master
+   :target: https://travis-ci.org/zalando/turnstile
    :alt: Build Status
 
 .. image:: https://coveralls.io/repos/zalando/turnstile/badge.svg?branch=master

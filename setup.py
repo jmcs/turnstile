@@ -39,7 +39,7 @@ setup(
     license='Apache License Version 2.0',
     install_requires=['click', 'GitPython', 'pathlib', 'PyYAML', 'rfc3986', 'MapGitConfig', 'requests', 'pip',
                       'pyrsistent'],
-    tests_require=['pytest-cov', 'pytest>=2.7', 'pytest-mock', ],
+    tests_require=['pytest-cov', 'pytest', 'pytest-mock', ],
     cmdclass={'test': PyTest},
     classifiers=[
         'Programming Language :: Python',
