@@ -4,6 +4,7 @@ python:
   - "3.4"
 install:
   - pip install -e .
+  - pip install -U pytest
   - pip install coveralls
 script:
   - python setup.py test
