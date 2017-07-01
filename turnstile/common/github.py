@@ -17,10 +17,10 @@ def extract_repository_from_url(git_url):
     :rtype: str | None
 
 
-    >>> extract_repository_from_url('https://github.com/zalando/turnstile.git')
-    'zalando/turnstile'
-    >>> extract_repository_from_url('git@github.com:zalando-stups/senza.git')
-    'zalando-stups/senza'
+    >>> extract_repository_from_url('https://github.com/jmcs/turnstile.git')
+    'jmcs/turnstile'
+    >>> extract_repository_from_url('git@github.com:jmcs/senza.git')
+    'jmcs/senza'
     >>> extract_repository_from_url('git@bitbucket.org:jmcs/somerepo.git') is None
     True
     """
@@ -45,9 +45,9 @@ def extract_issue_number(github_reference):
     42
     >>> extract_issue_number('GH-24')
     24
-    >>> extract_issue_number('zalando#26')
+    >>> extract_issue_number('jmcs#26')
     26
-    >>> extract_issue_number('zalando/turnstile#36')
+    >>> extract_issue_number('jmcs/turnstile#36')
     36
     >>> extract_issue_number('JIRA-1000') is None
     True

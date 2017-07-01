@@ -8,7 +8,7 @@ from turnstile.checks.commit_msg.specification import check
 
 
 def test_check():
-    commit_1 = message.CommitMessage('something', 'https://github.com/zalando-bus/turnstile/issues/42 m€sságe')
+    commit_1 = message.CommitMessage('something', 'https://github.com/jmcs/turnstile/issues/42 m€sságe')
     result_1 = check(None, {}, commit_1)
     assert result_1.successful
     assert result_1.details == []

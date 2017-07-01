@@ -1,9 +1,9 @@
-.. image:: https://travis-ci.org/zalando/turnstile.svg?branch=master
-   :target: https://travis-ci.org/zalando/turnstile
+.. image:: https://travis-ci.org/jmcs/turnstile.svg?branch=master
+   :target: https://travis-ci.org/jmcs/turnstile
    :alt: Build Status
 
-.. image:: https://coveralls.io/repos/zalando/turnstile/badge.svg?branch=master
-  :target: https://coveralls.io/r/zalando/turnstile?branch=master
+.. image:: https://coveralls.io/repos/jmcs/turnstile/badge.svg?branch=master
+  :target: https://coveralls.io/r/jmcs/turnstile?branch=master
   :alt: Code Coverage
 
 .. image:: https://img.shields.io/pypi/v/turnstile-core.svg
@@ -11,12 +11,12 @@
    :alt: Latest PyPI version
 
 .. image:: https://img.shields.io/pypi/l/turnstile-core.svg
-   :target: https://github.com/zalando/turnstile/blob/master/LICENSE
+   :target: https://github.com/jmcs/turnstile/blob/master/LICENSE
    :alt: License
 
 
-Turnstile - Zalando Local Git Hooks
-===================================
+Turnstile - Local Git Hooks
+===========================
 
 Configurable local git hooks.
 
