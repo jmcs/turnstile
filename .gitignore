@@ -1,6 +1,5 @@
 .coverage
 dist
-zalando_turnstile.egg-info
 build
 *.pyc
 *.egg

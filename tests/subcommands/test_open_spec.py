@@ -40,12 +40,12 @@ class FakeRepo(object):
         return FakeCommit(reference, message)
 
     def remote(self, name):
-        return FakeRemote('git@github.com:zalando/turnstile.git')
+        return FakeRemote('git@github.com:jmcs/turnstile.git')
 
 
 class FakeRepo2(FakeRepo):
     def remote(self, name):
-        return FakeRemote('git@example.com:zalando/turnstile.git')
+        return FakeRemote('git@example.com:jmcs/turnstile.git')
 
 
 @pytest.fixture()
@@ -102,8 +102,8 @@ def test_github(fake_webbrowser, mocker):
     fake_config.return_value = {'specification': {'allowed_formats': ['github']}}
     runner = CliRunner()
     result = runner.invoke(cmd, ['002'])
-    assert "Opening https://github.com/zalando/turnstile/issues/100" in result.output
-    fake_webbrowser.assert_called_with('https://github.com/zalando/turnstile/issues/100')
+    assert "Opening https://github.com/jmcs/turnstile/issues/100" in result.output
+    fake_webbrowser.assert_called_with('https://github.com/jmcs/turnstile/issues/100')
     assert result.exit_code == 0
 
 
@@ -112,7 +112,7 @@ def test_github_wrong_remote(fake_webbrowser, mocker, fake_git2):
     fake_config.return_value = {'specification': {'allowed_formats': ['github']}}
     runner = CliRunner()
     result = runner.invoke(cmd, ['002'])
-    assert "git@example.com:zalando/turnstile.git is not a github repository." in result.output
+    assert "git@example.com:jmcs/turnstile.git is not a github repository." in result.output
     assert result.exit_code == 1
 
 

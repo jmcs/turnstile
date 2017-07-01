@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Zalando Turnstile documentation build configuration file, created by
+# Turnstile documentation build configuration file, created by
 # sphinx-quickstart on Tue Jun 16 08:34:44 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -43,7 +43,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Zalando Turnstile'
+project = u'Turnstile'
 copyright = u'2015, Zalando SE'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -184,7 +184,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'ZalandoTurnstiledoc'
+htmlhelp_basename = 'Turnstiledoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -204,8 +204,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'ZalandoTurnstile.tex', u'Zalando Turnstile Documentation',
-     u'Zalando SE', 'manual'),
+    ('index', 'Turnstile.tex', u'Turnstile Documentation',
+     u'jmcs', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -234,8 +234,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'zalandoturnstile', u'Zalando Turnstile Documentation',
-     [u'Zalando SE'], 1)
+    ('index', 'turnstile', u'Turnstile Documentation',
+     [u'jmcs'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -248,8 +248,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'ZalandoTurnstile', u'Zalando Turnstile Documentation',
-     u'Zalando SE', 'ZalandoTurnstile', 'One line description of project.',
+    ('index', 'Turnstile', u'Turnstile Documentation',
+     u'jmcs', 'Turnstile', 'One line description of project.',
      'Miscellaneous'),
 ]
 

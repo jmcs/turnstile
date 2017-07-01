@@ -12,7 +12,7 @@ def check(user_configuration, repository_configuration, commit_message):
 
     >>> import turnstile.models.message as message
 
-    >>> commit = message.CommitMessage('master', 'https://github.com/zalando-bus/turnstile/issues/42 message')
+    >>> commit = message.CommitMessage('master', 'https://github.com/jmcs/turnstile/issues/42 message')
     >>> result = check(None, None, commit)
     >>> result.successful
     False

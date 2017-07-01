@@ -13,31 +13,31 @@ def check(user_configuration, repository_configuration, commit_message):
 
     By default this check only allows master
     >>> import turnstile.models.message as message
-    >>> commit = message.CommitMessage('master', 'https://github.com/zalando-bus/turnstile/issues/42 message')
+    >>> commit = message.CommitMessage('master', 'https://github.com/jmcs/turnstile/issues/42 message')
     >>> result = check(None, {}, commit)
     >>> result.successful, result.details
     (True, [])
 
-    >>> commit = message.CommitMessage('feature/42', 'https://github.com/zalando-bus/turnstile/issues/42 message')
+    >>> commit = message.CommitMessage('feature/42', 'https://github.com/jmcs/turnstile/issues/42 message')
     >>> result = check(None, {}, commit)
     >>> result.successful, result.details
     (False, ["feature/42 doesn't match any allowed pattern."])
 
     But you can add more allowed patterns
     >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
-    >>> commit = message.CommitMessage('release/R10', 'https://github.com/zalando-bus/turnstile/issues/42 message')
+    >>> commit = message.CommitMessage('release/R10', 'https://github.com/jmcs/turnstile/issues/42 message')
     >>> result = check(None, allow_feature_release, commit)
     >>> result.successful, result.details
     (True, [])
 
     >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
-    >>> commit = message.CommitMessage('release/R10', 'https://github.com/zalando-bus/turnstile/issues/42 message')
+    >>> commit = message.CommitMessage('release/R10', 'https://github.com/jmcs/turnstile/issues/42 message')
     >>> result = check(None, allow_feature_release, commit)
     >>> result.successful, result.details
     (True, [])
 
     >>> allow_feature_release = {'branch-pattern': {'allowed': ['^feature/', '^release/R']}}
-    >>> commit = message.CommitMessage('release/broken', 'https://github.com/zalando-bus/turnstile/issues/42 message')
+    >>> commit = message.CommitMessage('release/broken', 'https://github.com/jmcs/turnstile/issues/42 message')
     >>> result = check(None, allow_feature_release, commit)
     >>> result.successful, result.details
     (False, ["release/broken doesn't match any allowed pattern."])

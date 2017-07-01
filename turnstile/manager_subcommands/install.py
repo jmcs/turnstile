@@ -48,5 +48,5 @@ def cmd(verbosity):
     hook_dir = pathlib.Path(repository.git_dir) / 'hooks'
     pre_commit_path = hook_dir / 'pre-commit'
     commit_msg_path = hook_dir / 'commit-msg'
-    install_hook('Pre-Commit', pre_commit_path, 'zalando-turnstile-pre-commit')
-    install_hook('Commit-Msg', commit_msg_path, 'zalando-turnstile-commit-msg $1')
+    install_hook('Pre-Commit', pre_commit_path, 'turnstile-pre-commit')
+    install_hook('Commit-Msg', commit_msg_path, 'turnstile-commit-msg $1')
