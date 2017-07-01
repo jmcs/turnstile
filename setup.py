@@ -52,6 +52,8 @@ setup(
     ],
     long_description='Turnstile - Local Git Hooks',
     entry_points={'console_scripts': ['turnstile = turnstile.manager:manager',
+                                      'zalando-turnstile-commit-msg = turnstile.commit_msg:commit_msg',
+                                      'zalando-turnstile-pre-commit = turnstile.pre_commit:pre_commit'
                                       'turnstile-commit-msg = turnstile.commit_msg:commit_msg',
                                       'turnstile-pre-commit = turnstile.pre_commit:pre_commit'],
                   'turnstile.commands': ['config = turnstile.manager_subcommands.config',
