@@ -88,7 +88,10 @@ def run_checks(hook_name, user_configuration, repository_configuration, check_ob
     logger = output.get_sub_logger(hook_name.replace('_', '-'), 'run_checks')
     failed_checks = 0
     checklist = repository_configuration.get('checks', [])
-    check_functions = get_checks(hook_name)
+    checklist = [x.replace('-', '_') for x in checklist]
+    logger.debug('Configured Checks: %s', checklist)
+    check_functions = list(get_checks(hook_name))
+    logger.debug('Available Checks: %s', [f[0] for f in check_functions])
     checks_to_run = (check for check_name, check in check_functions if check_name in checklist)
     for check in checks_to_run:
 

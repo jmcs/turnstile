@@ -1,8 +1,8 @@
 checks:
     - specification
-    - branch-release
+    - branch_release
     - codevalidator
-    - protect-master
+    - protect_master
 specification:
     allowed_schemes: ['https']
     allowed_formats: ['uri', 'github']
